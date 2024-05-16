@@ -9,8 +9,6 @@ const SearchBar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
 
-  console.log(searchParams.get("search"));
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
     setSearch(searchValue);
