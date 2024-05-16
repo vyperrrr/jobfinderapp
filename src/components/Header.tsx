@@ -1,6 +1,9 @@
+import { NavLink } from "react-router-dom";
+
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { Avatar, Button, DropdownMenu, Heading } from "@radix-ui/themes";
+import { Avatar, DropdownMenu, Heading } from "@radix-ui/themes";
 import { AngleIcon } from "@radix-ui/react-icons";
+import NavLinkButton from "./NavLinkButton";
 
 const Header: React.FC = () => {
   return (
@@ -10,29 +13,31 @@ const Header: React.FC = () => {
         <NavigationMenu.Item>
           <span className="flex items-center justify-center gap-x-2">
             <AngleIcon width="24" height="24" />
-            <Heading>Jobfinder</Heading>
+            <NavLink to="/" end>
+              <Heading>Jobfinder</Heading>
+            </NavLink>
           </span>
         </NavigationMenu.Item>
       </NavigationMenu.List>
       {/* Middle section */}
       <NavigationMenu.List className="flex items-center justify-end gap-4">
         <NavigationMenu.Item>
-          <Button variant="soft" radius="full">
+          <NavLinkButton to="/" radius="full">
             Főoldal
-          </Button>
+          </NavLinkButton>
         </NavigationMenu.Item>
       </NavigationMenu.List>
       {/* Right side section */}
       <NavigationMenu.List className="flex items-center justify-end gap-2">
         <NavigationMenu.Item>
-          <Button variant="soft" radius="full">
+          <NavLinkButton to="/login" radius="full">
             Bejelentkezés
-          </Button>
+          </NavLinkButton>
         </NavigationMenu.Item>
         <NavigationMenu.Item>
-          <Button variant="soft" radius="full">
-            Regisztáció
-          </Button>
+          <NavLinkButton to="/signup" radius="full">
+            Regisztráció
+          </NavLinkButton>
         </NavigationMenu.Item>
         <NavigationMenu.Item>
           <DropdownMenu.Root dir="rtl">
