@@ -1,5 +1,15 @@
+import { Section } from "@radix-ui/themes";
+import SearchBar from "../components/SearchBar";
+import Filters from "../components/Filters";
+
 const HomePage: React.FC = () => {
-  return <h1>Home Page</h1>;
+  return (
+    <Section>
+      <h1>Home</h1>
+      <SearchBar />
+      <Filters />
+    </Section>
+  );
 };
 
 export default HomePage;
