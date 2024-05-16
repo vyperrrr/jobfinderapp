@@ -8,7 +8,11 @@ import {
   Checkbox,
 } from "@radix-ui/themes";
 
-const Filters: React.FC = () => {
+import { useSearchParams } from "react-router-dom";
+
+const FilterForm: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <Form.Root className="space-y-2">
       <Form.Field name="salaryFrom">
@@ -46,11 +50,11 @@ const Filters: React.FC = () => {
           Agree to Terms and Conditions
         </Flex>
       </Text>
-      <Form.Submit>
+      <Form.Submit asChild>
         <Button variant="soft">Szűrők alkalmazása</Button>
       </Form.Submit>
     </Form.Root>
   );
 };
 
-export default Filters;
+export default FilterForm;

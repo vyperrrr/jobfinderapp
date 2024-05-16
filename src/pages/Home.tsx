@@ -1,6 +1,6 @@
 import { Section } from "@radix-ui/themes";
 import SearchBar from "../components/SearchBar";
-import Filters from "../components/Filters";
+import FilterForm from "../components/Filters";
 
 const HomePage: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
       <h2>Keresés</h2>
       <SearchBar />
       <h2>Szűrők</h2>
-      <Filters />
+      <FilterForm />
     </Section>
   );
 };
