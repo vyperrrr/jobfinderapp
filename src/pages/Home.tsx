@@ -1,6 +1,6 @@
 import { Section } from "@radix-ui/themes";
 import SearchBar from "../components/SearchBar";
-import FilterForm from "../components/Filters";
+import FilterForm from "../components/FilterForm";
 
 const HomePage: React.FC = () => {
   return (

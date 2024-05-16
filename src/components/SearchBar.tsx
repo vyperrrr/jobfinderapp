@@ -6,12 +6,22 @@ import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 
 const SearchBar: React.FC = () => {
-  const [search, setSearch] = useState("");
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    debounce(() => setSearchParams({ search: event.target.value }), 1000)();
+
+    if (event.target.value === "") {
+      searchParams.delete("search");
+      setSearchParams(searchParams);
+      return;
+    }
+
+    debounce(() => {
+      searchParams.set("search", event.target.value);
+      setSearchParams(searchParams);
+    }, 1000)();
   };
 
   return (
