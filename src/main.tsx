@@ -7,13 +7,13 @@ import { Theme } from "@radix-ui/themes";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Theme
-    accentColor="indigo"
+    accentColor="gray"
     grayColor="sand"
-    appearance="dark"
+    appearance="light"
     panelBackground="translucent"
     radius="small"
     scaling="100%"
   >
     <App />
-  </Theme>
+  </Theme>,
 );
