@@ -1,32 +1,41 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { TextField } from "@radix-ui/themes";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 
 const SearchBar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState(searchParams.get("search") ?? "");
+  const [search, setSearch] = useState("");
+
+  console.log(searchParams.get("search"));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    const searchValue = event.target.value;
+    setSearch(searchValue);
 
-    if (event.target.value === "") {
+    if (searchValue === "") {
       searchParams.delete("search");
       setSearchParams(searchParams);
       return;
     }
 
+    searchParams.set("search", searchValue);
+
     debounce(() => {
-      searchParams.set("search", event.target.value);
       setSearchParams(searchParams);
     }, 1000)();
   };
 
+  //When the search query changes in the URL, update the search state
+  useEffect(() => {
+    setSearch(searchParams.get("search") ?? "");
+  }, [searchParams]);
+
   return (
     <TextField.Root
-      placeholder="Search the docs…"
+      placeholder="Search for a job..."
       value={search}
       onChange={handleChange}
     >
