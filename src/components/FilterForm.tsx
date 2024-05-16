@@ -30,6 +30,7 @@ const FilterForm: React.FC = () => {
       ),
     );
 
+    // Return if errors are present
     if (Object.keys(errors).length != 0) {
       return;
     }
@@ -48,13 +49,6 @@ const FilterForm: React.FC = () => {
     setSearchParams(searchParams);
   };
 
-  let filters: Inputs | null = null;
-
-  const filtersJSON = searchParams.get("filters");
-  if (filtersJSON) {
-    filters = JSON.parse(filtersJSON);
-  }
-
   return (
     <span className="space-y-2">
       <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -68,10 +62,7 @@ const FilterForm: React.FC = () => {
         >
           <Form.Label>Fizetési sáv alja</Form.Label>
           <Form.Control asChild>
-            <TextField.Root
-              type="number"
-              defaultValue={filters?.salaryFrom ?? ""}
-            />
+            <TextField.Root type="number" />
           </Form.Control>
           {errors.salaryFrom && (
             <Form.Label className="text-sm text-red-500">
@@ -89,10 +80,7 @@ const FilterForm: React.FC = () => {
         >
           <Form.Label>Fizetési sáv teteje</Form.Label>
           <Form.Control asChild>
-            <TextField.Root
-              type="number"
-              defaultValue={filters?.salaryTo ?? ""}
-            />
+            <TextField.Root type="number" />
           </Form.Control>
           {errors.salaryTo && (
             <Form.Label className="text-sm text-red-500">
@@ -103,7 +91,7 @@ const FilterForm: React.FC = () => {
         <Form.Field {...register("type")}>
           <Form.Label>Foglalkoztatás típusa</Form.Label>
           <Form.Control asChild>
-            <select defaultValue={filters?.type ?? "full-time"}>
+            <select>
               <option value="full-time">Teljes állás</option>
               <option value="part-time">Részmunkaidős állás</option>
               <option value="internship">Gyakornoki állás</option>
@@ -113,16 +101,13 @@ const FilterForm: React.FC = () => {
         <Form.Field {...register("city")}>
           <Form.Label>Település</Form.Label>
           <Form.Control asChild>
-            <TextField.Root defaultValue={filters?.city ?? ""} />
+            <TextField.Root />
           </Form.Control>
         </Form.Field>
         <Form.Field {...register("homeOffice")}>
           <Form.Label>Home Office lehetőség</Form.Label>
           <Form.Control asChild>
-            <input
-              type="checkbox"
-              defaultChecked={filters?.homeOffice ?? false}
-            />
+            <input type="checkbox" />
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>

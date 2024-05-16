@@ -32,11 +32,7 @@ const SearchBar: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <TextField.Root
-      placeholder="Search for a job..."
-      value={search}
-      onChange={handleChange}
-    >
+    <TextField.Root value={search} onChange={handleChange}>
       <TextField.Slot>
         <MagnifyingGlassIcon height="16" width="16" />
       </TextField.Slot>
