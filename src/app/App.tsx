@@ -1,7 +1,9 @@
-import { Button } from "@radix-ui/themes";
+import { RouterProvider } from "react-router-dom";
+
+import { router } from "../router";
 
 function App() {
-  return <Button className="text-lg font-bold underline">Hello world!</Button>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
