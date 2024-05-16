@@ -3,14 +3,15 @@ import { TextField } from "@radix-ui/themes";
 
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { debounce } from "lodash";
 
 const SearchBar: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    setSearchParams({ search: event.target.value });
+    debounce(() => setSearchParams({ search: event.target.value }), 1000)();
   };
 
   return (
