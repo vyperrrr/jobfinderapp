@@ -32,12 +32,12 @@ const FilterForm: React.FC = () => {
     }
 
     searchParams.set("filters", stringifiedData);
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
   };
 
   const removeFilters = () => {
     searchParams.delete("filters");
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
   };
 
   return (

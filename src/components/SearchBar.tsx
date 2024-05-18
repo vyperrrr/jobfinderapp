@@ -18,7 +18,7 @@ const SearchBar: React.FC = () => {
     } else {
       searchParams.set("search", searchValue);
     }
-    setSearchParams(searchParams);
+    setSearchParams(searchParams, { replace: true });
   }, DEBOUNCE_TIME);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
