@@ -1,7 +1,7 @@
 import { Section } from "@radix-ui/themes";
 import SearchBar from "../components/SearchBar";
 import FilterForm from "../components/FilterForm";
-import JobList from "../components/JobList";
+import JobList from "../features/JobList";
 
 const HomePage: React.FC = () => {
   return (
