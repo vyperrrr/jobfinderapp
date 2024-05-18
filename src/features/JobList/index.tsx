@@ -1,4 +1,6 @@
 import JobPanel from "../../components/JobPanel";
+
+import { useSearchParams } from "react-router-dom";
 import { useGetJobsQuery } from "./jobsApi";
 
 type Job = {
@@ -14,8 +16,20 @@ type Job = {
   userId: number;
 };
 
+type Filters = {
+  salaryFrom: number;
+  salaryTo: number;
+  type: "part-time" | "full-time" | "internship";
+  city: string;
+  homeOffice: boolean;
+};
+
 const JobList: React.FC = () => {
-  const { data, isError, isLoading } = useGetJobsQuery();
+  const [searchParams] = useSearchParams();
+
+  const filters: Filters = JSON.parse(searchParams.get("filters") ?? "{}");
+
+  const { data, isError, isLoading } = useGetJobsQuery(filters);
 
   if (isError) {
     return <div>An error occurred...</div>;
