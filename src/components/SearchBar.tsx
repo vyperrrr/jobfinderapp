@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 
-const DEBOUNCE_TIME = 1000;
+const DEBOUNCE_TIME = 300;
 
 const SearchBar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
