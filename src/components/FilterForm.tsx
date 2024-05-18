@@ -31,11 +31,9 @@ const FilterForm: React.FC = () => {
 
     const stringifiedData = JSON.stringify(data);
 
-    const filtersChanged = compareSearchParams(
-      searchParams,
-      "filters",
-      stringifiedData,
-    );
+    const currentFilters = searchParams.get("filters");
+
+    const filtersChanged = compareSearchParams(currentFilters, stringifiedData);
 
     if (filtersChanged) {
       searchParams.set("filters", stringifiedData);
