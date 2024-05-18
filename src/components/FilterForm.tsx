@@ -5,7 +5,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
 
-type Filters = {
+type Inputs = {
+  company: string;
   salaryFrom: number;
   salaryTo: number;
   type: "part-time" | "full-time" | "internship";
@@ -20,11 +21,11 @@ const FilterForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Filters>();
+  } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Filters> = (data) => setFilters(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => setFilters(data);
 
-  const setFilters = (data: Filters) => {
+  const setFilters = (data: Inputs) => {
     if (Object.keys(errors).length != 0) {
       return;
     }

@@ -27,9 +27,13 @@ type Filters = {
 const JobList: React.FC = () => {
   const [searchParams] = useSearchParams();
 
+  const search: string = searchParams.get("search") ?? "";
   const filters: Filters = JSON.parse(searchParams.get("filters") ?? "{}");
 
-  const { data, isError, isLoading } = useGetJobsQuery(filters);
+  const { data, isError, isLoading } = useGetJobsQuery({
+    company: search,
+    ...filters,
+  });
 
   if (isError) {
     return <div>An error occurred...</div>;

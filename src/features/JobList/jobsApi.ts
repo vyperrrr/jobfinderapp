@@ -20,7 +20,8 @@ type Jobs = {
   data: [Job];
 };
 
-type Filters = {
+type QueryParams = {
+  company: string;
   salaryFrom: number;
   salaryTo: number;
   type: "part-time" | "full-time" | "internship";
@@ -32,13 +33,29 @@ export const jobsApi = createApi({
   reducerPath: "jobsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/" }),
   endpoints: (builder) => ({
-    getJobs: builder.query<Jobs, Partial<Filters>>({
+    getJobs: builder.query<Jobs, Partial<QueryParams>>({
       query: (filters) => {
-        const params = new URLSearchParams();
+        let queryString = "";
         Object.entries(filters).forEach(([key, value]) => {
-          if (value) params.append(key, value.toString());
+          if (value) {
+            switch (key) {
+              case "company":
+                queryString += `${key}[$like]=%${value}%&`;
+                break;
+              case "salaryFrom":
+                queryString += `${key}[$gt]=${value}&`;
+                break;
+              case "salaryTo":
+                queryString += `${key}[$lt]=${value}&`;
+                break;
+              default:
+                queryString += `${key}=${value}&`;
+            }
+          }
         });
-        return `jobs?${params.toString()}`;
+        console.log(queryString);
+        queryString = queryString.slice(0, -1);
+        return `jobs?${queryString}`;
       },
     }),
   }),
