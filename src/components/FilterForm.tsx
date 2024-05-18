@@ -24,22 +24,14 @@ const FilterForm: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => setFilters(data);
 
   const setFilters = (data: Inputs) => {
-    const filteredData = Object.fromEntries(
-      Object.entries(data).filter(
-        ([_, value]) => value !== "" && value !== null && value !== undefined,
-      ),
-    );
-
-    // Return if errors are present
     if (Object.keys(errors).length != 0) {
       return;
     }
 
-    const stringifiedFilteredData = JSON.stringify(filteredData);
+    const stringifiedData = JSON.stringify(data);
 
-    // If the filters are different from the current filters, update the URL
-    if (searchParams.get("filters") !== stringifiedFilteredData) {
-      searchParams.set("filters", stringifiedFilteredData);
+    if (compareSearchParams(stringifiedData)) {
+      searchParams.set("filters", stringifiedData);
       setSearchParams(searchParams);
     }
   };
@@ -49,20 +41,21 @@ const FilterForm: React.FC = () => {
     setSearchParams(searchParams);
   };
 
+  const compareSearchParams = (dataJSON: string) => {
+    const currentFilters = searchParams.get("filters");
+    if (currentFilters !== dataJSON) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <span className="space-y-2">
       <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Field
-          {...register("salaryFrom", {
-            validate: {
-              geZero: (value) =>
-                value >= 0 || "Nullát vagy pozitív számot kell megadnod.",
-            },
-          })}
-        >
+        <Form.Field {...register("salaryFrom")}>
           <Form.Label>Fizetési sáv alja</Form.Label>
           <Form.Control asChild>
-            <TextField.Root type="number" />
+            <TextField.Root min="0" type="number" />
           </Form.Control>
           {errors.salaryFrom && (
             <Form.Label className="text-sm text-red-500">
@@ -70,14 +63,7 @@ const FilterForm: React.FC = () => {
             </Form.Label>
           )}
         </Form.Field>
-        <Form.Field
-          {...register("salaryTo", {
-            validate: {
-              geZero: (value) =>
-                value >= 0 || "Nullát vagy pozitív számot kell megadnod.",
-            },
-          })}
-        >
+        <Form.Field {...register("salaryTo")}>
           <Form.Label>Fizetési sáv teteje</Form.Label>
           <Form.Control asChild>
             <TextField.Root type="number" />
@@ -97,18 +83,33 @@ const FilterForm: React.FC = () => {
               <option value="internship">Gyakornoki állás</option>
             </select>
           </Form.Control>
+          {errors.type && (
+            <Form.Label className="text-sm text-red-500">
+              {errors.type.message ?? "Nem megfelelő érték"}
+            </Form.Label>
+          )}
         </Form.Field>
         <Form.Field {...register("city")}>
           <Form.Label>Település</Form.Label>
           <Form.Control asChild>
             <TextField.Root />
           </Form.Control>
+          {errors.city && (
+            <Form.Label className="text-sm text-red-500">
+              {errors.city.message ?? "Nem megfelelő érték"}
+            </Form.Label>
+          )}
         </Form.Field>
         <Form.Field {...register("homeOffice")}>
           <Form.Label>Home Office lehetőség</Form.Label>
           <Form.Control asChild>
             <input type="checkbox" />
           </Form.Control>
+          {errors.homeOffice && (
+            <Form.Label className="text-sm text-red-500">
+              {errors.homeOffice.message ?? "Nem megfelelő érték"}
+            </Form.Label>
+          )}
         </Form.Field>
         <Form.Submit asChild>
           <Button variant="soft">Szűrők alkalmazása</Button>
