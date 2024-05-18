@@ -1,6 +1,7 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { TextField } from "@radix-ui/themes";
 
+import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 
@@ -8,21 +9,21 @@ const DEBOUNCE_TIME = 1000;
 
 const SearchBar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchValueRef = useRef("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = event.target.value;
-
+  const debouncedSetSearchParams = debounce(() => {
+    const searchValue = searchValueRef.current;
     if (searchValue === "") {
       searchParams.delete("search");
-      setSearchParams(searchParams);
-      return;
+    } else {
+      searchParams.set("search", searchValue);
     }
+    setSearchParams(searchParams);
+  }, DEBOUNCE_TIME);
 
-    searchParams.set("search", searchValue);
-
-    debounce(() => {
-      setSearchParams(searchParams);
-    }, DEBOUNCE_TIME)();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    searchValueRef.current = event.target.value;
+    debouncedSetSearchParams();
   };
 
   return (
