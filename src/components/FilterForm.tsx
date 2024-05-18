@@ -33,9 +33,7 @@ const FilterForm: React.FC = () => {
 
     const currentFilters = searchParams.get("filters");
 
-    const filtersChanged = compareSearchParams(currentFilters, stringifiedData);
-
-    if (!filtersChanged) {
+    if (!compareSearchParams(currentFilters, stringifiedData)) {
       return;
     }
 
