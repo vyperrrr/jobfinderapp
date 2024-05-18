@@ -75,6 +75,9 @@ const FilterForm: React.FC = () => {
           <Form.Label>Foglalkoztatás típusa</Form.Label>
           <Form.Control asChild>
             <select>
+              <option value="" defaultChecked>
+                Válassz egy lehetőséget
+              </option>
               <option value="full-time">Teljes állás</option>
               <option value="part-time">Részmunkaidős állás</option>
               <option value="internship">Gyakornoki állás</option>
