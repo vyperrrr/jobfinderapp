@@ -1,10 +1,7 @@
-import { Button, ButtonProps } from "@radix-ui/themes";
-import { NavLink, NavLinkProps } from "react-router-dom";
+import { Button } from "@radix-ui/themes";
+import { NavLink } from "react-router-dom";
 
-export type NavLinkButtonProps = ButtonProps &
-  NavLinkProps & {
-    children: React.ReactNode;
-  };
+import { NavLinkButtonProps } from "./types";
 
 const NavLinkButton: React.FC<NavLinkButtonProps> = ({
   to,

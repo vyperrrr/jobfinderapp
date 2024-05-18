@@ -3,26 +3,8 @@ import JobPanel from "../../components/JobPanel";
 import { useSearchParams } from "react-router-dom";
 import { useGetJobsQuery } from "./jobsApi";
 
-type Job = {
-  id: number;
-  company: string;
-  position: string;
-  description: string;
-  salaryFrom: number;
-  salaryTo: number;
-  type: string;
-  city: string;
-  homeOffice: boolean;
-  userId: number;
-};
-
-type Filters = {
-  salaryFrom: number;
-  salaryTo: number;
-  type: "part-time" | "full-time" | "internship";
-  city: string;
-  homeOffice: boolean;
-};
+import { Job } from "../../types";
+import { Filters } from "./types";
 
 const JobList: React.FC = () => {
   const [searchParams] = useSearchParams();

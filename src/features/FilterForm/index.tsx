@@ -3,15 +3,9 @@ import { Button, TextField } from "@radix-ui/themes";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import { compareSearchParams } from "../utils";
+import { compareSearchParams } from "../../utils";
 
-type Inputs = {
-  salaryFrom: number;
-  salaryTo: number;
-  type: "part-time" | "full-time" | "internship";
-  city: string;
-  homeOffice: boolean;
-};
+import { Inputs } from "./types";
 
 const FilterForm: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

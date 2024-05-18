@@ -1,33 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type Job = {
-  id: number;
-  company: string;
-  position: string;
-  description: string;
-  salaryFrom: number;
-  salaryTo: number;
-  type: string;
-  city: string;
-  homeOffice: boolean;
-  userId: number;
-};
-
-type Jobs = {
-  total: number;
-  limit: number;
-  skip: number;
-  data: [Job];
-};
-
-type QueryParams = {
-  company: string;
-  salaryFrom: number;
-  salaryTo: number;
-  type: "part-time" | "full-time" | "internship";
-  city: string;
-  homeOffice: boolean;
-};
+import { Jobs, QueryParams } from "./types";
 
 export const jobsApi = createApi({
   reducerPath: "jobsApi",
