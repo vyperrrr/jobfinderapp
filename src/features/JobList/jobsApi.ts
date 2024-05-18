@@ -32,16 +32,13 @@ export const jobsApi = createApi({
   reducerPath: "jobsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/" }),
   endpoints: (builder) => ({
-    getJobs: builder.query<Jobs, Filters>({
-      query: ({ salaryFrom, salaryTo, type, city, homeOffice }) => {
-        let query = "jobs?";
-        if (salaryFrom) query += `salaryFrom[$gt]=${salaryFrom}&`;
-        if (salaryTo) query += `salaryTo[$lt]=${salaryTo}&`;
-        if (type) query += `type=${type}&`;
-        if (city) query += `city=${city}&`;
-        if (homeOffice) query += `homeOffice=${homeOffice}&`;
-        console.log(query);
-        return query.endsWith("&") ? query.slice(0, -1) : query;
+    getJobs: builder.query<Jobs, Partial<Filters>>({
+      query: (filters) => {
+        const params = new URLSearchParams();
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value) params.append(key, value.toString());
+        });
+        return `jobs?${params.toString()}`;
       },
     }),
   }),
