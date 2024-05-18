@@ -33,7 +33,7 @@ const FilterForm: React.FC = () => {
 
     const currentFilters = searchParams.get("filters");
 
-    if (!compareSearchParams(currentFilters, stringifiedData)) {
+    if (compareSearchParams(currentFilters, stringifiedData)) {
       return;
     }
 
@@ -52,7 +52,7 @@ const FilterForm: React.FC = () => {
         <Form.Field {...register("salaryFrom")}>
           <Form.Label>Fizetési sáv alja</Form.Label>
           <Form.Control asChild>
-            <TextField.Root min="0" type="number" />
+            <TextField.Root type="number" />
           </Form.Control>
           {errors.salaryFrom && (
             <Form.Label className="text-sm text-red-500">
