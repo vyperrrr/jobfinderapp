@@ -1,17 +1,16 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { TextField } from "@radix-ui/themes";
 
-import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
 
+const DEBOUNCE_TIME = 1000;
+
 const SearchBar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
-    setSearch(searchValue);
 
     if (searchValue === "") {
       searchParams.delete("search");
@@ -23,16 +22,11 @@ const SearchBar: React.FC = () => {
 
     debounce(() => {
       setSearchParams(searchParams);
-    }, 1000)();
+    }, DEBOUNCE_TIME)();
   };
 
-  //When the search query changes in the URL, update the search state
-  useEffect(() => {
-    setSearch(searchParams.get("search") ?? "");
-  }, [searchParams]);
-
   return (
-    <TextField.Root value={search} onChange={handleChange}>
+    <TextField.Root onChange={handleChange}>
       <TextField.Slot>
         <MagnifyingGlassIcon height="16" width="16" />
       </TextField.Slot>
