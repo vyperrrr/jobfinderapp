@@ -6,7 +6,6 @@ import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
 
 type Inputs = {
-  company: string;
   salaryFrom: number;
   salaryTo: number;
   type: "part-time" | "full-time" | "internship";
