@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 type Job = {
   id: number;
@@ -13,12 +13,21 @@ type Job = {
   userId: number;
 };
 
+type Jobs = {
+  total: number;
+  limit: number;
+  skip: number;
+  data: [Job];
+};
+
 export const jobsApi = createApi({
   reducerPath: "jobsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:3030" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/" }),
   endpoints: (builder) => ({
-    getJobs: builder.query<Job, void>({
-      query: () => "/jobs",
+    getJobs: builder.query<Jobs, void>({
+      query: () => "jobs",
     }),
   }),
 });
+
+export const { useGetJobsQuery } = jobsApi;
