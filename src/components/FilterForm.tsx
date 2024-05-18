@@ -3,6 +3,7 @@ import { Button, TextField } from "@radix-ui/themes";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
+import { compareSearchParams } from "../utils";
 
 type Inputs = {
   salaryFrom: number;
@@ -30,7 +31,13 @@ const FilterForm: React.FC = () => {
 
     const stringifiedData = JSON.stringify(data);
 
-    if (compareSearchParams(stringifiedData)) {
+    const filtersChanged = compareSearchParams(
+      searchParams,
+      "filters",
+      stringifiedData,
+    );
+
+    if (filtersChanged) {
       searchParams.set("filters", stringifiedData);
       setSearchParams(searchParams);
     }
@@ -39,14 +46,6 @@ const FilterForm: React.FC = () => {
   const removeFilters = () => {
     searchParams.delete("filters");
     setSearchParams(searchParams);
-  };
-
-  const compareSearchParams = (dataJSON: string) => {
-    const currentFilters = searchParams.get("filters");
-    if (currentFilters !== dataJSON) {
-      return true;
-    }
-    return false;
   };
 
   return (
