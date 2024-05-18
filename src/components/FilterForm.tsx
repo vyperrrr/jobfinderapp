@@ -35,10 +35,12 @@ const FilterForm: React.FC = () => {
 
     const filtersChanged = compareSearchParams(currentFilters, stringifiedData);
 
-    if (filtersChanged) {
-      searchParams.set("filters", stringifiedData);
-      setSearchParams(searchParams);
+    if (!filtersChanged) {
+      return;
     }
+
+    searchParams.set("filters", stringifiedData);
+    setSearchParams(searchParams);
   };
 
   const removeFilters = () => {
