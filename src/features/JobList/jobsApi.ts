@@ -17,7 +17,7 @@ export const jobsApi = createApi({
   reducerPath: "jobsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:3030" }),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query<Job, void>({
+    getJobs: builder.query<Job, void>({
       query: () => "/jobs",
     }),
   }),
