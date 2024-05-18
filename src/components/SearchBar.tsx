@@ -3,7 +3,6 @@ import { TextField } from "@radix-ui/themes";
 
 import { useSearchParams } from "react-router-dom";
 import { debounce } from "lodash";
-import { compareSearchParams } from "../utils";
 
 const DEBOUNCE_TIME = 1000;
 
@@ -16,14 +15,6 @@ const SearchBar: React.FC = () => {
     if (searchValue === "") {
       searchParams.delete("search");
       setSearchParams(searchParams);
-      return;
-    }
-
-    const currentSearch = searchParams.get("search");
-
-    const searchChanged = compareSearchParams(currentSearch, searchValue);
-
-    if (!searchChanged) {
       return;
     }
 
