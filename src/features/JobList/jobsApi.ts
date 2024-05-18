@@ -48,6 +48,8 @@ export const jobsApi = createApi({
               case "salaryTo":
                 params.append(key + "[$lt]", value.toString());
                 break;
+              default:
+                params.append(key, value.toString());
             }
           }
         });
