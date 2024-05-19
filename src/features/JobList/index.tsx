@@ -1,6 +1,6 @@
 import JobPanel from "../../components/JobPanel";
 
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useGetJobsQuery } from "./jobsApi";
 
 import { Job } from "../../types";
@@ -31,7 +31,11 @@ const JobList: React.FC = () => {
   return (
     <Section className="space-y-2">
       {data?.data.map((job: Job) => {
-        return <JobPanel key={job.id} job={job} />;
+        return (
+          <Link to={`jobs/${job.id}`}>
+            <JobPanel key={job.id} job={job} />
+          </Link>
+        );
       })}
     </Section>
   );
