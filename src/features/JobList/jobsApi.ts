@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { Jobs, QueryParams } from "./types";
+import { Job } from "../../types";
+import { Jobs, JobsQueryParams, JobQueryParams } from "./types";
 
 export const jobsApi = createApi({
   reducerPath: "jobsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/" }),
   endpoints: (builder) => ({
-    getJobs: builder.query<Jobs, Partial<QueryParams>>({
+    getJobs: builder.query<Jobs, Partial<JobsQueryParams>>({
       query: (filters) => {
         const params = new URLSearchParams();
         Object.entries(filters).forEach(([key, value]) => {
@@ -29,7 +30,11 @@ export const jobsApi = createApi({
         return `jobs?${params.toString()}`;
       },
     }),
+    getJob: builder.query<Job, Partial<JobQueryParams>>({
+      query: ({ id }) => `jobs/${id}`,
+    }),
   }),
 });
 
 export const { useGetJobsQuery } = jobsApi;
+export const { useGetJobQuery } = jobsApi;
