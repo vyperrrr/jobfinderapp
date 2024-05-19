@@ -5,6 +5,7 @@ import { useGetJobsQuery } from "./jobsApi";
 
 import { Job } from "../../types";
 import { Filters } from "./types";
+import { Section } from "@radix-ui/themes";
 
 const JobList: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -28,11 +29,11 @@ const JobList: React.FC = () => {
   console.log(data);
 
   return (
-    <div>
+    <Section className="space-y-2">
       {data?.data.map((job: Job) => {
         return <JobPanel key={job.id} job={job} />;
       })}
-    </div>
+    </Section>
   );
 };
 
