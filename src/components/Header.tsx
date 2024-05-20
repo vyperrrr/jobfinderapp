@@ -30,12 +30,12 @@ const Header: React.FC = () => {
       {/* Right side section */}
       <NavigationMenu.List className="flex items-center justify-end gap-2">
         <NavigationMenu.Item>
-          <NavLinkButton to="/login" radius="full">
+          <NavLinkButton to="/auth/login" radius="full">
             Bejelentkezés
           </NavLinkButton>
         </NavigationMenu.Item>
         <NavigationMenu.Item>
-          <NavLinkButton to="/signup" radius="full">
+          <NavLinkButton to="/auth/register" radius="full">
             Regisztráció
           </NavLinkButton>
         </NavigationMenu.Item>
