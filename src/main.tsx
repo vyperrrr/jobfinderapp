@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import App from "./app/App.tsx";
 import "@radix-ui/themes/styles.css";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Theme } from "@radix-ui/themes";
 import { store } from "./app/store.ts";

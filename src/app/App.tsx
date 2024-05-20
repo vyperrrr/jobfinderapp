@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 
+import { ToastContainer } from "react-toastify";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -16,7 +18,12 @@ function App() {
     dispatch(login({ user: authenticated.user, token: authenticated.token }));
   });
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

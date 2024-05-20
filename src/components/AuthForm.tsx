@@ -10,6 +10,7 @@ import {
 import { login } from "../features/authSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 type Inputs = {
   email: string;
@@ -19,6 +20,16 @@ type Inputs = {
   role: "company" | "jobseeker";
   experiences?: string;
 };
+
+interface Error {
+  data: {
+    name: string;
+    message: string;
+    code: number;
+    className: string;
+  };
+  status: number;
+}
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -31,11 +42,24 @@ const AuthForm = () => {
 
   const dispatch = useDispatch();
 
-  const [loginUser, { data: loginData, isSuccess: loginSuccess }] =
-    useLoginUserMutation();
+  const [
+    loginUser,
+    {
+      data: loginData,
+      isSuccess: isLoginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
+  ] = useLoginUserMutation<>();
 
-  const [registerUser, { isSuccess: registerSuccess }] =
-    useRegisterUserMutation();
+  const [
+    registerUser,
+    {
+      isSuccess: isRegisterSuccess,
+      isError: isRegisterError,
+      error: registerError,
+    },
+  ] = useRegisterUserMutation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (mode === "login") handleLogin(data);
@@ -53,18 +77,19 @@ const AuthForm = () => {
   };
 
   useEffect(() => {
-    if (loginSuccess) {
-      console.log(loginData);
+    if (isLoginSuccess) {
       dispatch(login({ user: loginData.user, token: loginData.accessToken }));
+      toast.success("Sikeres bejelentkezés!");
       navigate("/");
     }
-  }, [loginSuccess, dispatch, loginData, navigate]);
+  }, [isLoginSuccess, dispatch, loginData, navigate]);
 
   useEffect(() => {
-    if (registerSuccess) {
-      navigate("/");
+    if (isRegisterSuccess) {
+      toast.success("Sikeres regisztráció!");
+      navigate("/auth/login");
     }
-  }, [registerSuccess, navigate]);
+  }, [isRegisterSuccess, navigate]);
 
   return (
     <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
