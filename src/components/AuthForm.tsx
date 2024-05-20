@@ -3,7 +3,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, TextArea, TextField } from "@radix-ui/themes";
 
 import { useParams } from "react-router";
-import { useLoginUserMutation } from "../services/authApi";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "../services/authApi";
 import { login } from "../features/authSlice";
 import { useDispatch } from "react-redux";
 
@@ -11,7 +14,8 @@ type Inputs = {
   email: string;
   password: string;
   confirmPassword?: string;
-  role?: "company" | "jobseeker";
+  fullname: string;
+  role: "company" | "jobseeker";
   experiences?: string;
 };
 
@@ -24,29 +28,44 @@ const AuthForm = () => {
 
   const dispatch = useDispatch();
 
-  const [
-    loginUser,
-    {
-      data: loginData,
-      isError: isLoginError,
-      isSuccess: isLoginSuccess,
-      error: loginError,
-    },
-  ] = useLoginUserMutation();
+  const [loginUser, { data: loginData, isSuccess: loginSuccess }] =
+    useLoginUserMutation();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (mode === "login") {
-      const { email, password } = data;
-      loginUser({ email, password });
-      if (isLoginSuccess) {
-      }
+  const [registerUser, { data: registerData, isSuccess: registerSuccess }] =
+    useRegisterUserMutation();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (mode === "login") handleLogin(data);
+    if (mode === "register") handleRegister(data);
+  };
+
+  const handleLogin = async (data: Inputs) => {
+    const { email, password } = data;
+    await loginUser({ email, password });
+    if (loginSuccess) {
+      console.log(loginData);
+      dispatch(login({ user: loginData.user, token: loginData.accessToken }));
+    }
+  };
+
+  const handleRegister = async (data: Inputs) => {
+    const { email, password, fullname, role } = data;
+    await registerUser({ email, password, fullname, role });
+    if (registerSuccess) {
+      console.log(registerData);
     }
   };
 
   return (
     <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+      <Form.Field {...register("fullname")}>
+        <Form.Label>Teljes név</Form.Label>
+        <Form.Control asChild>
+          <TextField.Root />
+        </Form.Control>
+      </Form.Field>
       <Form.Field {...register("email")}>
-        <Form.Label>Felhasználónév</Form.Label>
+        <Form.Label>Email cím</Form.Label>
         <Form.Control asChild>
           <TextField.Root />
         </Form.Control>
@@ -68,7 +87,7 @@ const AuthForm = () => {
           <Form.Field {...register("role")}>
             <Form.Label>Regisztráció mint</Form.Label>
             <Form.Control asChild>
-              <select>
+              <select defaultValue="jobseeker">
                 <option value="jobseeker">Munkavállaló</option>
                 <option value="company">Munkáltató</option>…
               </select>
