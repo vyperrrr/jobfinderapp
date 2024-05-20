@@ -3,11 +3,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, TextArea, TextField } from "@radix-ui/themes";
 
 import { useParams } from "react-router";
+import { useLoginUserMutation } from "../services/authApi";
+import { login } from "../features/authSlice";
+import { useDispatch } from "react-redux";
 
 type Inputs = {
-  username: string;
+  email: string;
   password: string;
-  passwordAgain?: string;
+  confirmPassword?: string;
   role?: "company" | "jobseeker";
   experiences?: string;
 };
@@ -17,16 +20,32 @@ const AuthForm = () => {
   const mode = params.mode;
 
   const { register, handleSubmit, watch } = useForm<Inputs>();
-
   const role = watch("role");
 
+  const dispatch = useDispatch();
+
+  const [
+    loginUser,
+    {
+      data: loginData,
+      isError: isLoginError,
+      isSuccess: isLoginSuccess,
+      error: loginError,
+    },
+  ] = useLoginUserMutation();
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    if (mode === "login") {
+      const { email, password } = data;
+      loginUser({ email, password });
+      if (isLoginSuccess) {
+      }
+    }
   };
 
   return (
     <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-      <Form.Field {...register("username")}>
+      <Form.Field {...register("email")}>
         <Form.Label>Felhasználónév</Form.Label>
         <Form.Control asChild>
           <TextField.Root />
@@ -40,7 +59,7 @@ const AuthForm = () => {
       </Form.Field>
       {mode === "register" && (
         <>
-          <Form.Field {...register("passwordAgain")}>
+          <Form.Field {...register("confirmPassword")}>
             <Form.Label>Jelszó újra</Form.Label>
             <Form.Control asChild>
               <TextField.Root />
