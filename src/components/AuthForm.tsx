@@ -9,6 +9,7 @@ import {
 } from "../services/authApi";
 import { login } from "../features/authSlice";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 type Inputs = {
   email: string;
@@ -33,7 +34,7 @@ const AuthForm = () => {
   const [loginUser, { data: loginData, isSuccess: loginSuccess }] =
     useLoginUserMutation();
 
-  const [registerUser, { data: registerData, isSuccess: registerSuccess }] =
+  const [registerUser, { isSuccess: registerSuccess }] =
     useRegisterUserMutation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -44,20 +45,26 @@ const AuthForm = () => {
   const handleLogin = async (data: Inputs) => {
     const { email, password } = data;
     await loginUser({ email, password });
-    if (loginSuccess) {
-      console.log(loginData);
-      dispatch(login({ user: loginData.user, token: loginData.accessToken }));
-      navigate("/");
-    }
   };
 
   const handleRegister = async (data: Inputs) => {
     const { email, password, fullname, role } = data;
     await registerUser({ email, password, fullname, role });
+  };
+
+  useEffect(() => {
+    if (loginSuccess) {
+      console.log(loginData);
+      dispatch(login({ user: loginData.user, token: loginData.accessToken }));
+      navigate("/");
+    }
+  }, [loginSuccess, dispatch, loginData, navigate]);
+
+  useEffect(() => {
     if (registerSuccess) {
       navigate("/");
     }
-  };
+  }, [registerSuccess, navigate]);
 
   return (
     <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
