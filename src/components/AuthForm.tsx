@@ -2,7 +2,7 @@ import * as Form from "@radix-ui/react-form";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, TextArea, TextField } from "@radix-ui/themes";
 
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   useLoginUserMutation,
   useRegisterUserMutation,
@@ -20,6 +20,8 @@ type Inputs = {
 };
 
 const AuthForm = () => {
+  const navigate = useNavigate();
+
   const params = useParams<{ mode: string }>();
   const mode = params.mode;
 
@@ -45,6 +47,7 @@ const AuthForm = () => {
     if (loginSuccess) {
       console.log(loginData);
       dispatch(login({ user: loginData.user, token: loginData.accessToken }));
+      navigate("/");
     }
   };
 
@@ -52,18 +55,20 @@ const AuthForm = () => {
     const { email, password, fullname, role } = data;
     await registerUser({ email, password, fullname, role });
     if (registerSuccess) {
-      console.log(registerData);
+      navigate("/");
     }
   };
 
   return (
     <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-      <Form.Field {...register("fullname")}>
-        <Form.Label>Teljes név</Form.Label>
-        <Form.Control asChild>
-          <TextField.Root />
-        </Form.Control>
-      </Form.Field>
+      {mode === "register" && (
+        <Form.Field {...register("fullname")}>
+          <Form.Label>Teljes név</Form.Label>
+          <Form.Control asChild>
+            <TextField.Root />
+          </Form.Control>
+        </Form.Field>
+      )}
       <Form.Field {...register("email")}>
         <Form.Label>Email cím</Form.Label>
         <Form.Control asChild>

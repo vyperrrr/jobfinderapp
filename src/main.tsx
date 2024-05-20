@@ -4,6 +4,8 @@ import "@radix-ui/themes/styles.css";
 import "./index.css";
 
 import { Theme } from "@radix-ui/themes";
+import { store } from "./app/store.ts";
+import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Theme
@@ -14,6 +16,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     radius="small"
     scaling="100%"
   >
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </Theme>,
 );
