@@ -21,16 +21,6 @@ type Inputs = {
   experiences?: string;
 };
 
-interface Error {
-  data: {
-    name: string;
-    message: string;
-    code: number;
-    className: string;
-  };
-  status: number;
-}
-
 const AuthForm = () => {
   const navigate = useNavigate();
 
