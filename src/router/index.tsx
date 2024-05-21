@@ -4,6 +4,7 @@ import RootLayout from "../pages/layouts/RootLayout";
 import HomePage from "../pages/Home";
 import AuthPage from "../pages/Auth";
 import JobDetailPage from "../pages/JobDetail";
+import UserProfilePage from "../pages/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/auth/:mode", element: <AuthPage /> },
       { path: "/jobs/:id", element: <JobDetailPage /> },
+      { path: "/profile", element: <UserProfilePage /> },
     ],
   },
 ]);

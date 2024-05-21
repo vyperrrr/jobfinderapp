@@ -70,7 +70,9 @@ const Header: React.FC = () => {
                 />
               </DropdownMenu.Trigger>
               <DropdownMenu.Content variant="soft">
-                <DropdownMenu.Item>Profil</DropdownMenu.Item>
+                <NavLink to="/profile">
+                  <DropdownMenu.Item>Profil </DropdownMenu.Item>
+                </NavLink>
                 <DropdownMenu.Item onClick={() => dispatch(logout())}>
                   Kijelentkezés
                 </DropdownMenu.Item>

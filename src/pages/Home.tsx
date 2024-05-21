@@ -3,7 +3,7 @@ import SearchBar from "../components/SearchBar";
 import FilterForm from "../features/FilterForm";
 import JobList from "../features/JobList/";
 
-const HomePage: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <Section>
       <h1>Főoldal</h1>
@@ -18,4 +18,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Home;

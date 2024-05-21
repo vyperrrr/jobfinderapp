@@ -4,7 +4,7 @@ import { Button, Section } from "@radix-ui/themes";
 import { Table } from "@radix-ui/themes";
 import { formatSalary } from "../utils";
 
-const JobDetailPage = () => {
+const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
 
@@ -66,4 +66,4 @@ const JobDetailPage = () => {
   );
 };
 
-export default JobDetailPage;
+export default JobDetail;
