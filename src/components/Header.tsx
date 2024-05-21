@@ -5,7 +5,12 @@ import { Avatar, DropdownMenu, Heading } from "@radix-ui/themes";
 import { AngleIcon } from "@radix-ui/react-icons";
 import NavLinkButton from "./NavLinkButton";
 
+import { useAuth } from "../hooks/useAuth";
+
 const Header: React.FC = () => {
+  const { user, token } = useAuth();
+  console.log(user, token);
+
   return (
     <NavigationMenu.Root className="border-b-1 flex items-center justify-between border-b-2 p-3">
       {/* Logo */}
@@ -29,16 +34,20 @@ const Header: React.FC = () => {
       </NavigationMenu.List>
       {/* Right side section */}
       <NavigationMenu.List className="flex items-center justify-end gap-2">
-        <NavigationMenu.Item>
-          <NavLinkButton to="/auth/login" radius="full">
-            Bejelentkezés
-          </NavLinkButton>
-        </NavigationMenu.Item>
-        <NavigationMenu.Item>
-          <NavLinkButton to="/auth/register" radius="full">
-            Regisztráció
-          </NavLinkButton>
-        </NavigationMenu.Item>
+        {!token && (
+          <>
+            <NavigationMenu.Item>
+              <NavLinkButton to="/auth/login" radius="full">
+                Bejelentkezés
+              </NavLinkButton>
+            </NavigationMenu.Item>
+            <NavigationMenu.Item>
+              <NavLinkButton to="/auth/register" radius="full">
+                Regisztráció
+              </NavLinkButton>
+            </NavigationMenu.Item>
+          </>
+        )}
         <NavigationMenu.Item>
           <DropdownMenu.Root dir="rtl">
             <DropdownMenu.Trigger>

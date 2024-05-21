@@ -68,6 +68,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (isLoginSuccess) {
+      console.log(loginData);
       dispatch(login({ user: loginData.user, token: loginData.accessToken }));
       toast.success("Sikeres bejelentkezés!");
       navigate("/");

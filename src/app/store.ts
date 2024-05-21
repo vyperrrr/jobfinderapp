@@ -16,3 +16,5 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(jobsApi.middleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
