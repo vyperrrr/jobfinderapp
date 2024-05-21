@@ -6,10 +6,12 @@ import { AngleIcon } from "@radix-ui/react-icons";
 import NavLinkButton from "./NavLinkButton";
 
 import { useAuth } from "../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/authSlice";
 
 const Header: React.FC = () => {
   const { user, token } = useAuth();
-  console.log(user, token);
+  const dispatch = useDispatch();
 
   return (
     <NavigationMenu.Root className="border-b-1 flex items-center justify-between border-b-2 p-3">
@@ -69,7 +71,9 @@ const Header: React.FC = () => {
               </DropdownMenu.Trigger>
               <DropdownMenu.Content variant="soft">
                 <DropdownMenu.Item>Profil</DropdownMenu.Item>
-                <DropdownMenu.Item>Kijelentkezés</DropdownMenu.Item>
+                <DropdownMenu.Item onClick={() => dispatch(logout())}>
+                  Kijelentkezés
+                </DropdownMenu.Item>
               </DropdownMenu.Content>
             </DropdownMenu.Root>
           </NavigationMenu.Item>
