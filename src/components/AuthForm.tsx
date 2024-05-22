@@ -33,7 +33,7 @@ const AuthForm = () => {
   const dispatch = useDispatch();
 
   const [
-    loginUser,
+    authLogin,
     {
       data: loginData,
       isSuccess: isLoginSuccess,
@@ -43,7 +43,7 @@ const AuthForm = () => {
   ] = useLoginUserMutation();
 
   const [
-    registerUser,
+    authRegister,
     {
       isSuccess: isRegisterSuccess,
       // isError: isRegisterError,
@@ -58,12 +58,12 @@ const AuthForm = () => {
 
   const handleLogin = async (data: Inputs) => {
     const { email, password } = data;
-    await loginUser({ email, password });
+    await authLogin({ email, password });
   };
 
   const handleRegister = async (data: Inputs) => {
     const { email, password, fullname, role } = data;
-    await registerUser({ email, password, fullname, role });
+    await authRegister({ email, password, fullname, role });
   };
 
   useEffect(() => {
