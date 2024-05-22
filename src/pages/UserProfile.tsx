@@ -3,12 +3,12 @@ import { useGetExperiencesQuery } from "../services/experiencesApi";
 
 const UserProfile = () => {
   const { user } = useAuth();
-  const { data: experiences } = useGetExperiencesQuery();
+  const { data: experiences, isError, isSuccess } = useGetExperiencesQuery();
 
   return (
-    <div>
-      <h1>{JSON.stringify(user)}</h1>
-      <h2>{JSON.stringify(experiences)}</h2>
+    <div className="prose lg:prose-xl">
+      <h1></h1>
+      {user?.fullname}
     </div>
   );
 };
