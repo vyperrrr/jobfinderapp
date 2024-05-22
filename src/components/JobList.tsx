@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import { useGetJobsQuery } from "../services/jobsApi";
 
 import { Job } from "../types";
-import { Section } from "@radix-ui/themes";
 
 export type Filters = {
   salaryFrom: number;
@@ -37,7 +36,7 @@ const JobList: React.FC = () => {
     return <JobPanel key={job.id} job={job} />;
   });
 
-  return <Section className="space-y-2">{jobs}</Section>;
+  return <span className="space-y-6">{jobs}</span>;
 };
 
 export default JobList;

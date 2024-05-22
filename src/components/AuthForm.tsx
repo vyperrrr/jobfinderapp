@@ -83,60 +83,65 @@ const AuthForm = () => {
   }, [isRegisterSuccess, navigate]);
 
   return (
-    <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-      {mode === "register" && (
-        <Form.Field {...register("fullname")}>
-          <Form.Label>Teljes név</Form.Label>
-          <Form.Control asChild>
-            <TextField.Root />
-          </Form.Control>
-        </Form.Field>
-      )}
-      <Form.Field {...register("email")}>
-        <Form.Label>Email cím</Form.Label>
-        <Form.Control asChild>
-          <TextField.Root />
-        </Form.Control>
-      </Form.Field>
-      <Form.Field {...register("password")}>
-        <Form.Label>Jelszó</Form.Label>
-        <Form.Control asChild>
-          <TextField.Root />
-        </Form.Control>
-      </Form.Field>
-      {mode === "register" && (
-        <>
-          <Form.Field {...register("confirmPassword")}>
-            <Form.Label>Jelszó újra</Form.Label>
+    <div className="space-y-10">
+      <span className="prose">
+        <h1>{mode === "register" ? "Regisztráció" : "Bejelentkezés"}</h1>
+      </span>
+      <Form.Root className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        {mode === "register" && (
+          <Form.Field {...register("fullname")}>
+            <Form.Label>Teljes név</Form.Label>
             <Form.Control asChild>
               <TextField.Root />
             </Form.Control>
           </Form.Field>
-          <Form.Field {...register("role")}>
-            <Form.Label>Regisztráció mint</Form.Label>
-            <Form.Control asChild>
-              <select defaultValue="jobseeker">
-                <option value="jobseeker">Munkavállaló</option>
-                <option value="company">Munkáltató</option>…
-              </select>
-            </Form.Control>
-          </Form.Field>
-          {role === "jobseeker" && (
-            <Form.Field {...register("experiences")}>
-              <Form.Label>Munkatapasztalatok</Form.Label>
+        )}
+        <Form.Field {...register("email")}>
+          <Form.Label>Email cím</Form.Label>
+          <Form.Control asChild>
+            <TextField.Root />
+          </Form.Control>
+        </Form.Field>
+        <Form.Field {...register("password")}>
+          <Form.Label>Jelszó</Form.Label>
+          <Form.Control asChild>
+            <TextField.Root />
+          </Form.Control>
+        </Form.Field>
+        {mode === "register" && (
+          <>
+            <Form.Field {...register("confirmPassword")}>
+              <Form.Label>Jelszó újra</Form.Label>
               <Form.Control asChild>
-                <TextArea placeholder="Munkahely;Pozíció;Mettől-meddig" />
+                <TextField.Root />
               </Form.Control>
             </Form.Field>
-          )}
-        </>
-      )}
-      <Form.Submit asChild>
-        <Button variant="soft">
-          {mode === "register" ? "Regisztráció" : "Bejelentkezés"}
-        </Button>
-      </Form.Submit>
-    </Form.Root>
+            <Form.Field {...register("role")}>
+              <Form.Label>Regisztráció mint</Form.Label>
+              <Form.Control asChild>
+                <select defaultValue="jobseeker">
+                  <option value="jobseeker">Munkavállaló</option>
+                  <option value="company">Munkáltató</option>…
+                </select>
+              </Form.Control>
+            </Form.Field>
+            {role === "jobseeker" && (
+              <Form.Field {...register("experiences")}>
+                <Form.Label>Munkatapasztalatok</Form.Label>
+                <Form.Control asChild>
+                  <TextArea placeholder="Munkahely;Pozíció;Mettől-meddig" />
+                </Form.Control>
+              </Form.Field>
+            )}
+          </>
+        )}
+        <Form.Submit className="mt-10" asChild>
+          <Button className="float-right" size="3" variant="soft">
+            {mode === "register" ? "Regisztráció" : "Bejelentkezés"}
+          </Button>
+        </Form.Submit>
+      </Form.Root>
+    </div>
   );
 };
 

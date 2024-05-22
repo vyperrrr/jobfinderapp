@@ -14,28 +14,27 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <NavigationMenu.Root className="border-b-1 flex items-center justify-between border-b-2 p-3">
+    <NavigationMenu.Root className="border-b-1 flex items-center justify-between p-4">
       {/* Logo */}
       <NavigationMenu.List className="flex items-center justify-end gap-4">
         <NavigationMenu.Item>
           <span className="flex items-center justify-center gap-x-2">
-            <AngleIcon width="24" height="24" />
+            <AngleIcon width="24" height="14" />
             <NavLink to="/" end>
-              <Heading>Jobfinder</Heading>
+              <Heading className="uppercase tracking-wider" size="1">
+                Jobhunter
+              </Heading>
             </NavLink>
           </span>
         </NavigationMenu.Item>
       </NavigationMenu.List>
-      {/* Middle section */}
-      <NavigationMenu.List className="flex items-center justify-end gap-4">
+      {/* Right side section */}
+      <NavigationMenu.List className="flex items-center justify-end gap-2">
         <NavigationMenu.Item>
           <NavLinkButton to="/" radius="full">
             Főoldal
           </NavLinkButton>
         </NavigationMenu.Item>
-      </NavigationMenu.List>
-      {/* Right side section */}
-      <NavigationMenu.List className="flex items-center justify-end gap-2">
         {!token && (
           <>
             <NavigationMenu.Item>

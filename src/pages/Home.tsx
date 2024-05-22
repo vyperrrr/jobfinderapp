@@ -5,14 +5,20 @@ import JobList from "../components/JobList";
 
 const Home: React.FC = () => {
   return (
-    <Section>
-      <h1>Főoldal</h1>
-      <h2>Keresés</h2>
+    <Section className="space-y-10">
+      <span className="prose">
+        <h1>Főoldal</h1>
+        <h2>Keresés</h2>
+      </span>
       <SearchBar />
-      <h2>Szűrők</h2>
+      <span className="prose">
+        <h2>Szűrők</h2>
+      </span>
       <FilterForm />
-      <h2>Állások</h2>
-      <p>Állások listája</p>
+      <span className="prose">
+        <h2>Állások</h2>
+        <h3>Állások listája</h3>
+      </span>
       <JobList />
     </Section>
   );

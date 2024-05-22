@@ -112,10 +112,12 @@ const FilterForm: React.FC = () => {
           )}
         </Form.Field>
         <Form.Submit asChild>
-          <Button variant="soft">Szűrők alkalmazása</Button>
+          <Button size="3" variant="soft">
+            Szűrők alkalmazása
+          </Button>
         </Form.Submit>
       </Form.Root>
-      <Button variant="solid" color="red" onClick={removeFilters}>
+      <Button size="3" variant="solid" color="red" onClick={removeFilters}>
         Szűrők eltávolítása
       </Button>
     </span>
