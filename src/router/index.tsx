@@ -6,6 +6,8 @@ import AuthPage from "../pages/Auth";
 import JobDetailPage from "../pages/JobDetail";
 import UserProfilePage from "../pages/UserProfile";
 
+import RequireAuth from "../components/RequireAuth";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -14,7 +16,15 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/auth/:mode", element: <AuthPage /> },
       { path: "/jobs/:id", element: <JobDetailPage /> },
-      { path: "/profile", element: <UserProfilePage /> },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: "/profile",
+            element: <UserProfilePage />,
+          },
+        ],
+      },
     ],
   },
 ]);
