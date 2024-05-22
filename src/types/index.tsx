@@ -10,3 +10,19 @@ export type Job = {
   homeOffice: boolean;
   userId: number;
 };
+
+export type User = {
+  id: number;
+  email: string;
+  fullname: string;
+  role: "company" | "jobseeker";
+};
+
+export type Experience = {
+  id: number;
+  company: string;
+  title: string;
+  interval: string;
+  userId: number;
+  user: User;
+};

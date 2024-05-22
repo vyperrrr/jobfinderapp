@@ -1,13 +1,30 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "../app/api/apiSlice";
 
-import { Job } from "../../types";
-import { Jobs, JobsQueryParams, JobQueryParams } from "./types";
+import { Job } from "../types";
 
-export const jobsApi = createApi({
-  reducerPath: "jobsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/" }),
+export type Jobs = {
+  total: number;
+  limit: number;
+  skip: number;
+  data: [Job];
+};
+
+type JobsParams = {
+  company: string;
+  salaryFrom: number;
+  salaryTo: number;
+  type: "part-time" | "full-time" | "internship";
+  city: string;
+  homeOffice: boolean;
+};
+
+type JobParams = {
+  id: string;
+};
+
+export const jobsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getJobs: builder.query<Jobs, Partial<JobsQueryParams>>({
+    getJobs: builder.query<Jobs, Partial<JobsParams>>({
       query: (filters) => {
         const params = new URLSearchParams();
         Object.entries(filters).forEach(([key, value]) => {
@@ -30,7 +47,7 @@ export const jobsApi = createApi({
         return `jobs?${params.toString()}`;
       },
     }),
-    getJob: builder.query<Job, Partial<JobQueryParams>>({
+    getJob: builder.query<Job, Partial<JobParams>>({
       query: ({ id }) => `jobs/${id}`,
     }),
   }),

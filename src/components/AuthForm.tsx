@@ -37,17 +37,17 @@ const AuthForm = () => {
     {
       data: loginData,
       isSuccess: isLoginSuccess,
-      isError: isLoginError,
-      error: loginError,
+      // isError: isLoginError,
+      // error: loginError,
     },
-  ] = useLoginUserMutation<>();
+  ] = useLoginUserMutation();
 
   const [
     registerUser,
     {
       isSuccess: isRegisterSuccess,
-      isError: isRegisterError,
-      error: registerError,
+      // isError: isRegisterError,
+      // error: registerError,
     },
   ] = useRegisterUserMutation();
 

@@ -1,11 +1,18 @@
-import JobPanel from "../../components/JobPanel";
+import JobPanel from "./JobPanel";
 
 import { useSearchParams } from "react-router-dom";
-import { useGetJobsQuery } from "./jobsApi";
+import { useGetJobsQuery } from "../services/jobsApi";
 
-import { Job } from "../../types";
-import { Filters } from "./types";
+import { Job } from "../types";
 import { Section } from "@radix-ui/themes";
+
+export type Filters = {
+  salaryFrom: number;
+  salaryTo: number;
+  type: "part-time" | "full-time" | "internship";
+  city: string;
+  homeOffice: boolean;
+};
 
 const JobList: React.FC = () => {
   const [searchParams] = useSearchParams();

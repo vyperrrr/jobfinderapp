@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useGetJobQuery } from "../features/JobList/jobsApi";
+import { useGetJobQuery } from "../services/jobsApi";
 import { Button, Section } from "@radix-ui/themes";
 import { Table } from "@radix-ui/themes";
 import { formatSalary } from "../utils";
