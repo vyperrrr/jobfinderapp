@@ -13,9 +13,7 @@ const JobDetail = () => {
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
   const [applyForJob] = useApplyForJobMutation();
 
-  const handleApply = () => {
-    applyForJob({ jobId: job!.id });
-  };
+  const handleApply = () => applyForJob({ jobId: job!.id });
 
   if (isError) {
     return <div>An error occurred...</div>;

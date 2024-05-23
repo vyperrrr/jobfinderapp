@@ -12,7 +12,6 @@ export const applicantsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     applyForJob: builder.mutation<ApplyResponse, { jobId: number }>({
       query: (body) => {
-        console.log(body);
         return {
           url: `applicants`,
           method: "POST",

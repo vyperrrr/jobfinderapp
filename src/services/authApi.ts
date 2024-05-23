@@ -32,11 +32,10 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     registerUser: builder.mutation<RegisterResponse, RegisterParams>({
       query: (credentials) => {
-        console.log(credentials);
         return {
           url: "users",
           method: "POST",
-          body: { ...credentials },
+          body: credentials,
         };
       },
     }),
