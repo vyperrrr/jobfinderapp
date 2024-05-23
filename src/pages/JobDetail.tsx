@@ -6,9 +6,16 @@ import { formatSalary } from "../utils";
 
 import { FileTextIcon } from "@radix-ui/react-icons";
 
+import { useApplyForJobMutation } from "../services/applicantsApi";
+
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
+  const [applyForJob] = useApplyForJobMutation();
+
+  const handleApply = () => {
+    applyForJob({ jobId: job!.id });
+  };
 
   if (isError) {
     return <div>An error occurred...</div>;
@@ -30,7 +37,7 @@ const JobDetail = () => {
           <h1>Cég részletei</h1>
           <h2>Megtetszett a lehetőség? Jelentkezz!</h2>
         </span>
-        <Button size="3">
+        <Button size="3" onClick={handleApply}>
           <FileTextIcon />
           Jelentkezem a pozícióra
         </Button>
