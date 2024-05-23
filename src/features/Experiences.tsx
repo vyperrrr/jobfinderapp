@@ -3,6 +3,7 @@ import {
   useGetExperiencesQuery,
   useModifyExperienceMutation,
   useDeleteExperienceMutation,
+  useAddExperienceMutation,
 } from "../services/experiencesApi";
 import { useRef, useState } from "react";
 import ExperiencePanel from "../components/ExperiencePanel";
@@ -16,6 +17,7 @@ const Experiences = () => {
   } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
+  const [addExperience] = useAddExperienceMutation();
 
   const [editExperienceId, setEdit] = useState<number | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
