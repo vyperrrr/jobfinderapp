@@ -6,19 +6,12 @@ import JobList from "../components/JobList";
 const Home: React.FC = () => {
   return (
     <Section className="space-y-10">
-      <span className="prose">
-        <h1>Főoldal</h1>
-        <h2>Keresés</h2>
-      </span>
+      <h1>Főoldal</h1>
+      <h2>Keresés</h2>
       <SearchBar />
-      <span className="prose">
-        <h2>Szűrők</h2>
-      </span>
+      <h2>Szűrők</h2>
       <FilterForm />
-      <span className="prose">
-        <h2>Állások</h2>
-        <h3>Állások listája</h3>
-      </span>
+      <h2>Állások</h2>
       <JobList />
     </Section>
   );

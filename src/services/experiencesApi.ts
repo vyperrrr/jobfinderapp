@@ -14,7 +14,15 @@ export const experiencesApi = apiSlice.injectEndpoints({
     getExperiences: builder.query<ExperiencesResponse, void>({
       query: () => "experiences",
     }),
+    modifyExperience: builder.mutation<Experience, Partial<Experience>>({
+      query: (body) => ({
+        url: `experiences/${body.id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetExperiencesQuery } = experiencesApi;
+export const { useGetExperiencesQuery, useModifyExperienceMutation } =
+  experiencesApi;
