@@ -2,6 +2,7 @@ import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import {
   useGetExperiencesQuery,
   useModifyExperienceMutation,
+  useDeleteExperienceMutation,
 } from "../services/experiencesApi";
 import { useRef, useState } from "react";
 import ExperiencePanel from "../components/ExperiencePanel";
@@ -14,6 +15,7 @@ const Experiences = () => {
     refetch,
   } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
+  const [deleteExperience] = useDeleteExperienceMutation();
 
   const [editExperienceId, setEdit] = useState<number | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -32,6 +34,7 @@ const Experiences = () => {
       }).then(() => refetch());
     }
     setEdit(undefined);
+    setDialogOpen(false);
   };
 
   const handleModify = (id: number) => {
@@ -43,10 +46,17 @@ const Experiences = () => {
     (experience) => experience.id === editExperienceId,
   );
 
-  const handleDelete = (id: number) => {};
+  const handleDelete = (id: number) =>
+    deleteExperience({ id }).then(() => refetch());
 
   return (
     <div>
+      <span className="flex items-center justify-between">
+        <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
+        <Button color="green" onClick={() => setDialogOpen(true)}>
+          Tapasztalat hozzáadása
+        </Button>
+      </span>
       {experiences?.data.map((experience) => (
         <ExperiencePanel
           experience={experience}

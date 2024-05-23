@@ -21,8 +21,17 @@ export const experiencesApi = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    deleteExperience: builder.mutation<void, { id: number }>({
+      query: ({ id }) => ({
+        url: `experiences/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useGetExperiencesQuery, useModifyExperienceMutation } =
-  experiencesApi;
+export const {
+  useGetExperiencesQuery,
+  useModifyExperienceMutation,
+  useDeleteExperienceMutation,
+} = experiencesApi;
