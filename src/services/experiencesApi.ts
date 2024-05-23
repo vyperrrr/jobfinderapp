@@ -27,6 +27,13 @@ export const experiencesApi = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    addExperience: builder.mutation<Experience, Experience>({
+      query: (body) => ({
+        url: "experiences",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -34,4 +41,5 @@ export const {
   useGetExperiencesQuery,
   useModifyExperienceMutation,
   useDeleteExperienceMutation,
+  useAddExperienceMutation,
 } = experiencesApi;
