@@ -1,16 +1,14 @@
 import { Section, Table } from "@radix-ui/themes";
 import { useAuth } from "../hooks/useAuth";
 import Experiences from "../features/Experiences";
+import Advertisements from "../features/Advertisements";
 
 const UserProfile = () => {
   const { user } = useAuth();
 
   return (
     <Section className="space-y-10">
-      <span className="prose">
-        <h1>Személyes adatok</h1>
-        <h2>Adataid és tapasztalataid egy helyen.</h2>
-      </span>
+      <h1 className="text-4xl font-semibold">Személyes adatok</h1>
       <Table.Root>
         <Table.Body className="prose">
           <Table.Row>
@@ -27,10 +25,7 @@ const UserProfile = () => {
           </Table.Row>
         </Table.Body>
       </Table.Root>
-      <span className="prose flex">
-        <h2>Korábbi tapasztalataid</h2>
-      </span>
-      <Experiences />
+      {user?.role === "company" ? <Advertisements /> : <Experiences />}
     </Section>
   );
 };

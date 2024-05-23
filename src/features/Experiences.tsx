@@ -1,21 +1,22 @@
-import { Button, Table, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
 import {
   useGetExperiencesQuery,
   useModifyExperienceMutation,
 } from "../services/experiencesApi";
 import { useRef, useState } from "react";
-import { Pencil2Icon, FileTextIcon } from "@radix-ui/react-icons";
+import ExperiencePanel from "../components/ExperiencePanel";
 
 const Experiences = () => {
   const {
     data: experiences,
-    isError,
-    isSuccess,
+    // isError,
+    // isSuccess,
     refetch,
   } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
 
   const [editExperienceId, setEdit] = useState<number | undefined>(undefined);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const companyRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -33,68 +34,76 @@ const Experiences = () => {
     setEdit(undefined);
   };
 
+  const handleModify = (id: number) => {
+    setEdit(id);
+    setDialogOpen(true);
+  };
+
+  const experienceToModify = experiences?.data.find(
+    (experience) => experience.id === editExperienceId,
+  );
+
+  const handleDelete = (id: number) => {};
+
   return (
-    <Table.Root>
-      <Table.Header className="prose">
-        <Table.Row>
-          <Table.ColumnHeaderCell>Cég</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Pozíció</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Időszak</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body className="prose">
-        {isError && <div>Hiba történt...</div>}
-        {isSuccess &&
-          experiences?.data.map((experience) => (
-            <Table.Row key={experience.id}>
-              <Table.Cell>
-                {editExperienceId === experience.id ? (
-                  <TextField.Root
-                    defaultValue={experience.company}
-                    ref={companyRef}
-                  />
-                ) : (
-                  experience.company
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                {editExperienceId === experience.id ? (
-                  <TextField.Root
-                    defaultValue={experience.title}
-                    ref={titleRef}
-                  />
-                ) : (
-                  experience.title
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                {editExperienceId === experience.id ? (
-                  <TextField.Root
-                    defaultValue={experience.interval}
-                    ref={intervalRef}
-                  />
-                ) : (
-                  experience.interval
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                {editExperienceId === experience.id ? (
-                  <Button size="1" onClick={handleSave}>
-                    <FileTextIcon />
-                    Mentés
-                  </Button>
-                ) : (
-                  <Button size="1" onClick={() => setEdit(experience.id)}>
-                    <Pencil2Icon />
-                    Módosítás
-                  </Button>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-      </Table.Body>
-    </Table.Root>
+    <div>
+      {experiences?.data.map((experience) => (
+        <ExperiencePanel
+          experience={experience}
+          onModify={handleModify}
+          onDelete={handleDelete}
+        />
+      ))}
+      <Dialog.Root open={dialogOpen}>
+        <Dialog.Content maxWidth="450px">
+          <Dialog.Title>Tapasztalat módosítása</Dialog.Title>
+          <Dialog.Description size="2" mb="4">
+            Módosítsd tapasztalataidat
+          </Dialog.Description>
+
+          <Flex direction="column" gap="3">
+            <label>
+              <Text as="div" size="2" mb="1" weight="bold">
+                Pozíció
+              </Text>
+              <TextField.Root
+                defaultValue={experienceToModify && experienceToModify.title}
+                ref={titleRef}
+              />
+            </label>
+            <label>
+              <Text as="div" size="2" mb="1" weight="bold">
+                Cég neve
+              </Text>
+              <TextField.Root
+                defaultValue={experienceToModify && experienceToModify.company}
+                ref={companyRef}
+              />
+            </label>
+            <label>
+              <Text as="div" size="2" mb="1" weight="bold">
+                Intervallum
+              </Text>
+              <TextField.Root
+                defaultValue={experienceToModify && experienceToModify.interval}
+                ref={intervalRef}
+              />
+            </label>
+          </Flex>
+
+          <Flex gap="3" mt="4" justify="end">
+            <Button
+              variant="soft"
+              color="gray"
+              onClick={() => setDialogOpen(false)}
+            >
+              Vissza
+            </Button>
+            <Button onClick={handleSave}>Mentés</Button>
+          </Flex>
+        </Dialog.Content>
+      </Dialog.Root>
+    </div>
   );
 };
 

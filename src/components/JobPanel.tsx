@@ -9,7 +9,7 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
   return (
     <Link
       to={`jobs/${job.id}`}
-      className="w-100 flex h-40 items-center justify-between border-b-2 border-gray-400 bg-gray-50 px-4 text-gray-800 hover:bg-gray-200"
+      className="flex h-40 items-center justify-between border-b-2 border-gray-400 bg-gray-50 px-4 text-gray-800 hover:bg-gray-200"
     >
       <span>
         <p className="text-xl">{job.company}</p>
