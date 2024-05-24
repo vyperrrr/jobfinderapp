@@ -14,7 +14,6 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/auth/:mode", element: <AuthPage /> },
       { path: "/jobs/:id", element: <JobDetailPage /> },
       {
         element: <RequireAuth />,
@@ -27,4 +26,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/auth/:mode", element: <AuthPage /> },
 ]);

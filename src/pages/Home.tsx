@@ -8,8 +8,6 @@ import { DropdownMenu } from "@radix-ui/themes";
 const Home: React.FC = () => {
   return (
     <Section className="space-y-10">
-      <h1 className="text-4xl font-semibold">Főoldal</h1>
-      <h2 className="text-3xl font-semibold">Keresés</h2>
       <span className="flex items-center gap-x-2">
         <SearchBar />
         <DropdownMenu.Root dir="rtl">
@@ -19,12 +17,11 @@ const Home: React.FC = () => {
               Szűrők
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="p-6">
+          <DropdownMenu.Content className="p-6 md:min-w-[600px]">
             <FilterForm />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </span>
-      <h2 className="text-3xl font-semibold">Állások</h2>
       <JobList />
     </Section>
   );

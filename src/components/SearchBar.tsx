@@ -35,7 +35,7 @@ const SearchBar: React.FC = () => {
   return (
     <TextField.Root
       className="flex-1"
-      placeholder="Search for something..."
+      placeholder="Keresés..."
       size="3"
       onChange={handleChange}
     >

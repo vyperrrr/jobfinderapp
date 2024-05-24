@@ -1,11 +1,10 @@
-import { Section } from "@radix-ui/themes";
 import AuthForm from "../components/AuthForm";
 
 const Auth = () => {
   return (
-    <Section>
+    <div className="flex min-h-[100vh] items-center justify-center">
       <AuthForm />
-    </Section>
+    </div>
   );
 };
 

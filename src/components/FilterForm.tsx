@@ -137,7 +137,7 @@ const FilterForm: React.FC = () => {
         />
         <span className="flex gap-x-2">
           <Form.Submit asChild>
-            <Button size="3" variant="soft">
+            <Button size="3" variant="outline">
               Szűrők alkalmazása
             </Button>
           </Form.Submit>

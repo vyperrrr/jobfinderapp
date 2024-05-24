@@ -120,7 +120,7 @@ const Experiences = () => {
               ? "Módosítsa tapasztalatát."
               : "Adja meg tapasztalatát."}
           </Dialog.Description>
-          <Form.Root onSubmit={handleSubmit(onSubmit)}>
+          <Form.Root onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Form.Field {...register("title")}>
               <Form.Label className="text-sm font-semibold">Pozíció</Form.Label>
               <Form.Control asChild>
