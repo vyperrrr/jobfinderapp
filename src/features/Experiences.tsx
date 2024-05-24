@@ -34,7 +34,7 @@ const Experiences = () => {
 
   const [action, setAction] = useState<"add" | "modify" | undefined>(undefined);
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm<FormState>();
 
   const onSubmit: SubmitHandler<FormState> = async (data) => {
     switch (action) {
@@ -87,20 +87,23 @@ const Experiences = () => {
 
   return (
     <div>
-      <span className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
-        <Button color="green" onClick={() => handleAction("add")}>
-          Tapasztalat hozzáadása
-        </Button>
+      <span className="space-y-4">
+        <span className="flex items-center justify-between">
+          <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
+          <Button color="green" onClick={() => handleAction("add")}>
+            Tapasztalat hozzáadása
+          </Button>
+        </span>
+
+        {experiences?.data.map((experience) => (
+          <ExperiencePanel
+            key={experience.id}
+            experience={experience}
+            onModify={() => handleAction("modify", experience)}
+            onDelete={handleDelete}
+          />
+        ))}
       </span>
-      {experiences?.data.map((experience) => (
-        <ExperiencePanel
-          key={experience.id}
-          experience={experience}
-          onModify={() => handleAction("modify", experience)}
-          onDelete={handleDelete}
-        />
-      ))}
       <Dialog.Root open={dialogOpen}>
         <Dialog.Content maxWidth="450px">
           <Dialog.Title>
