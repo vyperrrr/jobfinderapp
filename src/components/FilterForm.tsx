@@ -1,7 +1,14 @@
 import * as Form from "@radix-ui/react-form";
-import { Button, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Checkbox,
+  Flex,
+  Select,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
 
@@ -20,6 +27,7 @@ const FilterForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => setFilters(data);
@@ -47,10 +55,12 @@ const FilterForm: React.FC = () => {
   };
 
   return (
-    <span className="space-y-2">
-      <Form.Root className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <Form.Root className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Field {...register("salaryFrom")}>
-          <Form.Label>Fizetési sáv alja</Form.Label>
+          <Text as="label" size="2" weight="bold">
+            Fizetési sáv alja
+          </Text>
           <Form.Control asChild>
             <TextField.Root type="number" />
           </Form.Control>
@@ -61,7 +71,9 @@ const FilterForm: React.FC = () => {
           )}
         </Form.Field>
         <Form.Field {...register("salaryTo")}>
-          <Form.Label>Fizetési sáv teteje</Form.Label>
+          <Text as="label" size="2" weight="bold">
+            Fizetési sáv teteje
+          </Text>
           <Form.Control asChild>
             <TextField.Root type="number" />
           </Form.Control>
@@ -71,26 +83,34 @@ const FilterForm: React.FC = () => {
             </Form.Label>
           )}
         </Form.Field>
-        <Form.Field {...register("type")}>
-          <Form.Label>Foglalkoztatás típusa</Form.Label>
-          <Form.Control asChild>
-            <select>
-              <option value="" defaultChecked>
-                Válassz egy lehetőséget
-              </option>
-              <option value="full-time">Teljes állás</option>
-              <option value="part-time">Részmunkaidős állás</option>
-              <option value="internship">Gyakornoki állás</option>
-            </select>
-          </Form.Control>
-          {errors.type && (
-            <Form.Label className="text-sm text-red-500">
-              {errors.type.message ?? "Nem megfelelő érték"}
-            </Form.Label>
+        <Controller
+          name="type"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Flex direction="column">
+              <Text as="label" size="2" weight="bold">
+                Munka típusa
+              </Text>
+              <Select.Root onValueChange={onChange} value={value}>
+                <Select.Trigger placeholder="Válassz egy típust..." />
+                <Select.Content position="popper">
+                  <Select.Group>
+                    <Select.Label>Típusok</Select.Label>
+                    <Select.Item value="full-time">
+                      Teljes munkaidős
+                    </Select.Item>
+                    <Select.Item value="part-time">Részmunkaidős</Select.Item>
+                    <Select.Item value="internship">
+                      Gyakornoki munka
+                    </Select.Item>
+                  </Select.Group>
+                </Select.Content>
+              </Select.Root>
+            </Flex>
           )}
-        </Form.Field>
+        />
         <Form.Field {...register("city")}>
-          <Form.Label>Település</Form.Label>
+          <Form.Label className="text-sm font-semibold">Település</Form.Label>
           <Form.Control asChild>
             <TextField.Root />
           </Form.Control>
@@ -100,27 +120,41 @@ const FilterForm: React.FC = () => {
             </Form.Label>
           )}
         </Form.Field>
-        <Form.Field {...register("homeOffice")}>
-          <Form.Label>Home Office lehetőség</Form.Label>
-          <Form.Control asChild>
-            <input type="checkbox" />
-          </Form.Control>
-          {errors.homeOffice && (
-            <Form.Label className="text-sm text-red-500">
-              {errors.homeOffice.message ?? "Nem megfelelő érték"}
-            </Form.Label>
+        <Controller
+          control={control}
+          name="homeOffice"
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <div>
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox checked={value} onCheckedChange={onChange} />
+                  Home office lehetőség
+                </Flex>
+              </Text>
+            </div>
           )}
-        </Form.Field>
-        <Form.Submit asChild>
-          <Button size="3" variant="soft">
-            Szűrők alkalmazása
+        />
+        <span className="flex gap-x-2">
+          <Form.Submit asChild>
+            <Button size="3" variant="soft">
+              Szűrők alkalmazása
+            </Button>
+          </Form.Submit>
+          <Button
+            size="3"
+            variant="solid"
+            color="red"
+            onClick={(event) => {
+              event.preventDefault();
+              removeFilters();
+            }}
+          >
+            Szűrők eltávolítása
           </Button>
-        </Form.Submit>
+        </span>
       </Form.Root>
-      <Button size="3" variant="solid" color="red" onClick={removeFilters}>
-        Szűrők eltávolítása
-      </Button>
-    </span>
+    </>
   );
 };
 

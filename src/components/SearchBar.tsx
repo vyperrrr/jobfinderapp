@@ -19,8 +19,6 @@ const SearchBar: React.FC = () => {
       return;
     }
 
-    console.log("run");
-
     if (searchValue === "") {
       searchParams.delete("search");
     } else {
@@ -35,9 +33,14 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <TextField.Root onChange={handleChange}>
-      <TextField.Slot>
-        <MagnifyingGlassIcon height="16" width="16" />
+    <TextField.Root
+      className="flex-1"
+      placeholder="Search for something..."
+      size="3"
+      onChange={handleChange}
+    >
+      <TextField.Slot side="right" pr="4">
+        <MagnifyingGlassIcon height="24" width="24" />
       </TextField.Slot>
     </TextField.Root>
   );

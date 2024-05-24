@@ -90,7 +90,11 @@ const Experiences = () => {
       <span className="space-y-4">
         <span className="flex items-center justify-between">
           <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
-          <Button color="green" onClick={() => handleAction("add")}>
+          <Button
+            variant="outline"
+            color="green"
+            onClick={() => handleAction("add")}
+          >
             Tapasztalat hozzáadása
           </Button>
         </span>
@@ -118,19 +122,23 @@ const Experiences = () => {
           </Dialog.Description>
           <Form.Root onSubmit={handleSubmit(onSubmit)}>
             <Form.Field {...register("title")}>
-              <Form.Label>Pozíció</Form.Label>
+              <Form.Label className="text-sm font-semibold">Pozíció</Form.Label>
               <Form.Control asChild>
                 <TextField.Root />
               </Form.Control>
             </Form.Field>
             <Form.Field {...register("company")}>
-              <Form.Label>Munkahely</Form.Label>
+              <Form.Label className="text-sm font-semibold">
+                Munkahely
+              </Form.Label>
               <Form.Control asChild>
                 <TextField.Root />
               </Form.Control>
             </Form.Field>
             <Form.Field {...register("interval")}>
-              <Form.Label>Intervallum</Form.Label>
+              <Form.Label className="text-sm font-semibold">
+                Intervallum
+              </Form.Label>
               <Form.Control asChild>
                 <TextField.Root />
               </Form.Control>

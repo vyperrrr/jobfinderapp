@@ -10,9 +10,9 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Theme
-    accentColor="gray"
+    accentColor="mint"
     grayColor="sand"
-    appearance="light"
+    appearance="dark"
     panelBackground="translucent"
     radius="small"
     scaling="100%"

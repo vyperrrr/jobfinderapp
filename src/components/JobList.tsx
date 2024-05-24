@@ -36,7 +36,11 @@ const JobList: React.FC = () => {
     return <JobPanel key={job.id} job={job} />;
   });
 
-  return <span className="space-y-6">{jobs}</span>;
+  return (
+    <div>
+      <span className="space-y-6">{jobs}</span>
+    </div>
+  );
 };
 
 export default JobList;

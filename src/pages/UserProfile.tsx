@@ -9,8 +9,8 @@ const UserProfile = () => {
   return (
     <Section className="space-y-10">
       <h1 className="text-4xl font-semibold">Személyes adatok</h1>
-      <Table.Root>
-        <Table.Body className="prose">
+      <Table.Root variant="ghost">
+        <Table.Body>
           <Table.Row>
             <Table.RowHeaderCell>Név</Table.RowHeaderCell>
             <Table.Cell>{user?.fullname}</Table.Cell>

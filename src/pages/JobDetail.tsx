@@ -31,17 +31,19 @@ const JobDetail = () => {
   return (
     <Section className="space-y-10">
       <div className="flex items-start justify-between">
-        <span className="prose">
-          <h1>Cég részletei</h1>
-          <h2>Megtetszett a lehetőség? Jelentkezz!</h2>
+        <span>
+          <h1 className="text-2xl font-semibold">Cég részletei</h1>
+          <h2 className="text-xl font-semibold">
+            Megtetszett a lehetőség? Jelentkezz!
+          </h2>
         </span>
-        <Button size="3" onClick={handleApply}>
+        <Button variant="outline" onClick={handleApply}>
           <FileTextIcon />
           Jelentkezem a pozícióra
         </Button>
       </div>
       <Table.Root>
-        <Table.Body className="prose">
+        <Table.Body>
           <Table.Row>
             <Table.RowHeaderCell>Név</Table.RowHeaderCell>
             <Table.Cell>{job?.company}</Table.Cell>
