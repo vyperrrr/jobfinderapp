@@ -1,118 +1,146 @@
-import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
+import { Button, Dialog, TextField } from "@radix-ui/themes";
 import {
   useGetExperiencesQuery,
   useModifyExperienceMutation,
   useDeleteExperienceMutation,
   useAddExperienceMutation,
 } from "../services/experiencesApi";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ExperiencePanel from "../components/ExperiencePanel";
+import { useForm, SubmitHandler } from "react-hook-form";
+import * as Form from "@radix-ui/react-form";
+import { Experience } from "../types";
+
+interface FormState {
+  id?: number; // id only exists when modifying
+  title: string;
+  company: string;
+  interval: string;
+}
+
+const defaultFormState: FormState = {
+  title: "",
+  company: "",
+  interval: "",
+};
 
 const Experiences = () => {
-  const {
-    data: experiences,
-    // isError,
-    // isSuccess,
-    refetch,
-  } = useGetExperiencesQuery();
+  const { data: experiences, refetch } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
   const [addExperience] = useAddExperienceMutation();
 
-  const [editExperienceId, setEdit] = useState<number | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const companyRef = useRef<HTMLInputElement>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const intervalRef = useRef<HTMLInputElement>(null);
+  const [action, setAction] = useState<"add" | "modify" | undefined>(undefined);
 
-  const handleSave = () => {
-    if (companyRef.current && titleRef.current && intervalRef.current) {
-      modifyExperience({
-        id: editExperienceId,
-        company: companyRef.current.value,
-        title: titleRef.current.value,
-        interval: intervalRef.current.value,
-      }).then(() => refetch());
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit: SubmitHandler<FormState> = async (data) => {
+    switch (action) {
+      case "add":
+        addExperience({
+          title: data.title,
+          company: data.company,
+          interval: data.interval,
+        });
+        break;
+      case "modify":
+        modifyExperience({
+          id: data.id,
+          title: data.title,
+          company: data.company,
+          interval: data.interval,
+        });
+        break;
     }
-    setEdit(undefined);
+
+    refetch();
+    setAction(undefined);
     setDialogOpen(false);
   };
 
-  const handleModify = (id: number) => {
-    setEdit(id);
+  function handleAction(action: "add" | "modify", experience?: Experience) {
+    setAction(action);
+
+    switch (action) {
+      case "add":
+        reset(defaultFormState);
+        break;
+      case "modify":
+        reset(experience);
+        break;
+    }
+
     setDialogOpen(true);
-  };
+  }
 
-  const experienceToModify = experiences?.data.find(
-    (experience) => experience.id === editExperienceId,
-  );
+  function handleDelete(id: number) {
+    deleteExperience({ id });
+    refetch();
+  }
 
-  const handleDelete = (id: number) =>
-    deleteExperience({ id }).then(() => refetch());
+  function handleClose() {
+    setAction(undefined);
+    setDialogOpen(false);
+  }
 
   return (
     <div>
       <span className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
-        <Button color="green" onClick={() => setDialogOpen(true)}>
+        <Button color="green" onClick={() => handleAction("add")}>
           Tapasztalat hozzáadása
         </Button>
       </span>
       {experiences?.data.map((experience) => (
         <ExperiencePanel
+          key={experience.id}
           experience={experience}
-          onModify={handleModify}
+          onModify={() => handleAction("modify", experience)}
           onDelete={handleDelete}
         />
       ))}
       <Dialog.Root open={dialogOpen}>
         <Dialog.Content maxWidth="450px">
-          <Dialog.Title>Tapasztalat módosítása</Dialog.Title>
+          <Dialog.Title>
+            {action === "modify"
+              ? "Tapasztalat módosítása"
+              : "Tapasztalat hozzáadása"}
+          </Dialog.Title>
           <Dialog.Description size="2" mb="4">
-            Módosítsd tapasztalataidat
+            {action === "modify"
+              ? "Módosítsa tapasztalatát."
+              : "Adja meg tapasztalatát."}
           </Dialog.Description>
-
-          <Flex direction="column" gap="3">
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Pozíció
-              </Text>
-              <TextField.Root
-                defaultValue={experienceToModify && experienceToModify.title}
-                ref={titleRef}
-              />
-            </label>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Cég neve
-              </Text>
-              <TextField.Root
-                defaultValue={experienceToModify && experienceToModify.company}
-                ref={companyRef}
-              />
-            </label>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Intervallum
-              </Text>
-              <TextField.Root
-                defaultValue={experienceToModify && experienceToModify.interval}
-                ref={intervalRef}
-              />
-            </label>
-          </Flex>
-
-          <Flex gap="3" mt="4" justify="end">
-            <Button
-              variant="soft"
-              color="gray"
-              onClick={() => setDialogOpen(false)}
-            >
-              Vissza
-            </Button>
-            <Button onClick={handleSave}>Mentés</Button>
-          </Flex>
+          <Form.Root onSubmit={handleSubmit(onSubmit)}>
+            <Form.Field {...register("title")}>
+              <Form.Label>Pozíció</Form.Label>
+              <Form.Control asChild>
+                <TextField.Root />
+              </Form.Control>
+            </Form.Field>
+            <Form.Field {...register("company")}>
+              <Form.Label>Munkahely</Form.Label>
+              <Form.Control asChild>
+                <TextField.Root />
+              </Form.Control>
+            </Form.Field>
+            <Form.Field {...register("interval")}>
+              <Form.Label>Intervallum</Form.Label>
+              <Form.Control asChild>
+                <TextField.Root />
+              </Form.Control>
+            </Form.Field>
+            <span className="float-right mt-6 flex items-center justify-end gap-x-2">
+              <Button onClick={handleClose}>Vissza</Button>
+              <Form.Submit asChild>
+                <Button variant="soft">
+                  {action === "modify" ? "Módosítás" : "Hozzáadás"}
+                </Button>
+              </Form.Submit>
+            </span>
+          </Form.Root>
         </Dialog.Content>
       </Dialog.Root>
     </div>

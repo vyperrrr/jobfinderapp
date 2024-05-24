@@ -27,7 +27,7 @@ export const experiencesApi = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    addExperience: builder.mutation<Experience, Experience>({
+    addExperience: builder.mutation<Experience, Partial<Experience>>({
       query: (body) => ({
         url: "experiences",
         method: "POST",

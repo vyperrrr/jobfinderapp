@@ -4,7 +4,7 @@ import { Button } from "@radix-ui/themes";
 
 type ExperiencePanelProps = {
   experience: Experience;
-  onModify: (id: number) => void;
+  onModify: () => void;
   onDelete: (id: number) => void;
 };
 
@@ -31,7 +31,7 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
       <span>
         <ul className="flex gap-x-4">
           <li>
-            <Button onClick={() => onModify(experience.id)}>
+            <Button onClick={onModify}>
               <Pencil2Icon />
               Szerkesztés
             </Button>
