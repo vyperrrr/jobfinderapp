@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 type User = {
-  id: string;
+  id: number;
   email: string;
   fullname: string;
   role: "company" | "jobseeker";
