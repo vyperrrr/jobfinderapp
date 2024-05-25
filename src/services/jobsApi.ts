@@ -53,9 +53,16 @@ export const jobsApi = apiSlice.injectEndpoints({
     getAllJobs: builder.query<Jobs, void>({
       query: () => "jobs",
     }),
+    deleteJob: builder.mutation<void, { id: number }>({
+      query: ({ id }) => ({
+        url: `jobs/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
 export const { useGetJobsQuery } = jobsApi;
 export const { useGetJobQuery } = jobsApi;
 export const { useGetAllJobsQuery } = jobsApi;
+export const { useDeleteJobMutation } = jobsApi;

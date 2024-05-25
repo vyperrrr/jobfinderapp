@@ -1,15 +1,21 @@
 import { Button } from "@radix-ui/themes";
 import AdvertisementPanel from "../components/AdvertisementPanel";
 
-import { useGetAllJobsQuery } from "../services/jobsApi";
+import { useGetAllJobsQuery, useDeleteJobMutation } from "../services/jobsApi";
 import { useAuth } from "../hooks/useAuth";
 
 const Advertisements = () => {
-  const { data: jobs } = useGetAllJobsQuery();
+  const { data: jobs, refetch } = useGetAllJobsQuery();
+  const [deleteJob] = useDeleteJobMutation();
   const { user } = useAuth();
 
   const advertisements =
     jobs?.data.filter((job) => job.userId === user?.id) || [];
+
+  function handleDelete(id: number) {
+    deleteJob({ id });
+    refetch();
+  }
 
   return (
     <div className="space-y-4">
@@ -28,6 +34,7 @@ const Advertisements = () => {
           <AdvertisementPanel
             key={advertisement.id}
             advertisement={advertisement}
+            onDelete={() => handleDelete(advertisement.id)}
           />
         ))}
       </div>
