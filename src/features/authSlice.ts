@@ -13,8 +13,10 @@ interface AuthState {
   token: string | null;
 }
 
+const PERSISTANCE_KEY = "USER_DATA";
+
 const preloadedState = () => {
-  const userData = localStorage.getItem("userData");
+  const userData = localStorage.getItem(PERSISTANCE_KEY);
   if (userData) {
     return JSON.parse(userData);
   }
@@ -30,12 +32,12 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       const { user, token } = action.payload;
-      localStorage.setItem("userData", JSON.stringify({ user, token }));
+      localStorage.setItem(PERSISTANCE_KEY, JSON.stringify({ user, token }));
       state.user = user;
       state.token = token;
     },
     logout: (state) => {
-      localStorage.removeItem("userData");
+      localStorage.removeItem(PERSISTANCE_KEY);
       state.user = null;
       state.token = null;
     },
