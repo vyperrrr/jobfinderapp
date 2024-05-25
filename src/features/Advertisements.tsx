@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const Advertisements = () => {
   const { user } = useAuth();
-  const { data: jobs } = useGetAllJobsQuery();
+  const { data: jobs, refetch } = useGetAllJobsQuery();
 
   const advertisements =
     jobs?.data.filter((job) => job.userId === user?.id) || [];
@@ -27,6 +27,7 @@ const Advertisements = () => {
           <AdvertisementPanel
             key={advertisement.id}
             advertisement={advertisement}
+            onDelete={() => refetch()}
           />
         ))}
       </div>

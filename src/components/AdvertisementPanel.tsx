@@ -20,31 +20,34 @@ import { Link } from "react-router-dom";
 
 interface AdvertisementPanelProps {
   advertisement: Job;
+  onDelete: () => void;
 }
 
 const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
   advertisement,
+  onDelete,
 }) => {
+  const [open, setOpen] = useState(false);
+
+  const [deleteJob] = useDeleteJobMutation();
+  const { data: applicants } = useGetJobApplicantsQuery(
+    {
+      jobId: advertisement.id,
+    },
+    { skip: !open || !advertisement },
+  );
+
   const salaryFormatted =
     formatSalary(advertisement.salaryFrom) +
     " - " +
     formatSalary(advertisement.salaryTo);
-
-  const [open, setOpen] = useState(false);
-
-  console.log(advertisement.id);
-
-  const [deleteJob] = useDeleteJobMutation();
-  const { data: applicants } = useGetJobApplicantsQuery({
-    jobId: advertisement.id,
-  });
-
   console.log(applicants);
 
   function handleModify() {}
 
   function handleDelete() {
     deleteJob({ id: advertisement.id });
+    onDelete();
   }
 
   return (
@@ -106,7 +109,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
           <h1>Nincsenek jelentkezők</h1>
         ) : (
           <ScrollArea type="auto" scrollbars="vertical">
-            <ul>
+            <ul className="space-y-2">
               {applicants?.map((applicant) => (
                 <li
                   key={applicant.user.id}
