@@ -13,21 +13,29 @@ interface AuthState {
   token: string | null;
 }
 
-const initialState: AuthState = {
-  user: null,
-  token: null,
+const preloadedState = () => {
+  const userData = localStorage.getItem("userData");
+  if (userData) {
+    return JSON.parse(userData);
+  }
+  return {
+    user: null,
+    token: null,
+  };
 };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: initialState,
+  initialState: preloadedState() as AuthState,
   reducers: {
     login: (state, action) => {
       const { user, token } = action.payload;
+      localStorage.setItem("userData", JSON.stringify({ user, token }));
       state.user = user;
       state.token = token;
     },
     logout: (state) => {
+      localStorage.removeItem("userData");
       state.user = null;
       state.token = null;
     },

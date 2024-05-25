@@ -6,5 +6,7 @@ export const useAuth = () => {
   const user = useSelector(getUser);
   const token = useSelector(getToken);
 
+  
+
   return { user, token };
 };
