@@ -24,7 +24,7 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
             {job.homeOffice ? "Remote" : "On-site"}
           </Badge>
         </span>
-        <ul className="flex gap-x-4 [&>li]:flex [&>li]:items-center [&>li]:gap-x-4">
+        <ul className="flex gap-x-4 [&>li]:flex [&>li]:items-center [&>li]:gap-x-1">
           <li>
             <BackpackIcon />
             <p>{job.company}</p>
@@ -43,7 +43,7 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
         <ul>
           <li className="flex items-center justify-center gap-x-2">
             <CiBadgeDollar className="h-8 w-8" />
-            <p className="text-lg font-semibold">{salaryFormatted}</p>
+            <p className="text-lg">{salaryFormatted}</p>
           </li>
         </ul>
         <Link to={`/jobs/${job.id}`}>

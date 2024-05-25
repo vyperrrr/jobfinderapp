@@ -15,7 +15,7 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
 }) => {
   return (
     <div className="flex h-40 items-center justify-between rounded-sm bg-slate-50  px-8 dark:bg-slate-800 dark:text-slate-50">
-      <span>
+      <span className="flex flex-col gap-y-4">
         <p className="text-2xl font-semibold">{experience.title}</p>
         <ul className="flex gap-x-4 [&>li]:flex [&>li]:items-center [&>li]:gap-x-1">
           <li>

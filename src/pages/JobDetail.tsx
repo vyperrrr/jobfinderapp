@@ -32,8 +32,8 @@ const JobDetail = () => {
     <Section className="space-y-10">
       <div className="flex items-start justify-between">
         <span>
-          <h1 className="text-2xl font-semibold">Cég részletei</h1>
-          <h2 className="text-xl font-semibold">
+          <h1 className="text-4xl font-semibold">Cég részletei</h1>
+          <h2 className="text-2xl font-semibold">
             Megtetszett a lehetőség? Jelentkezz!
           </h2>
         </span>

@@ -1,3 +1,4 @@
+import { Button } from "@radix-ui/themes";
 import AdvertisementPanel from "../components/AdvertisementPanel";
 
 const DUMMY_ADVERTISEMENTS = [
@@ -34,7 +35,13 @@ const Advertisements = () => {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-3xl font-semibold">Álláshirdetések</h1>
+        <span className="flex items-center justify-between">
+          <h1 className="text-3xl font-semibold">Álláshirdetések</h1>
+          <Button variant="surface" color="green">
+            Új hirdetés feladása
+          </Button>
+        </span>
+
         <h2 className="text-xl">A te hirdetéseid</h2>
       </div>
       <div className="space-y-4">

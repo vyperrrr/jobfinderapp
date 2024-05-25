@@ -71,14 +71,14 @@ const AuthForm = () => {
     if (isLoginSuccess) {
       console.log(loginData);
       dispatch(login({ user: loginData.user, token: loginData.accessToken }));
-      toast.success("Sikeres bejelentkezés!");
+      toast.dark("Sikeres bejelentkezés!");
       navigate("/");
     }
   }, [isLoginSuccess, dispatch, loginData, navigate]);
 
   useEffect(() => {
     if (isRegisterSuccess) {
-      toast.success("Sikeres regisztráció!");
+      toast.dark("Sikeres regisztráció!");
       navigate("/auth/login");
     }
   }, [isRegisterSuccess, navigate]);
