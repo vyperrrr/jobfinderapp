@@ -50,8 +50,12 @@ export const jobsApi = apiSlice.injectEndpoints({
     getJob: builder.query<Job, Partial<JobParams>>({
       query: ({ id }) => `jobs/${id}`,
     }),
+    getAllJobs: builder.query<Jobs, void>({
+      query: () => "jobs",
+    }),
   }),
 });
 
 export const { useGetJobsQuery } = jobsApi;
 export const { useGetJobQuery } = jobsApi;
+export const { useGetAllJobsQuery } = jobsApi;
