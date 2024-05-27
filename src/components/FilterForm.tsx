@@ -8,6 +8,8 @@ import {
   TextField,
 } from "@radix-ui/themes";
 
+import * as Slider from "@radix-ui/react-slider";
+
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
@@ -57,7 +59,7 @@ const FilterForm: React.FC = () => {
   return (
     <>
       <Form.Root className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Field {...register("salaryFrom")}>
+        {/* <Form.Field {...register("salaryFrom")}>
           <Text as="label" size="2" weight="bold">
             Fizetési sáv alja
           </Text>
@@ -82,7 +84,7 @@ const FilterForm: React.FC = () => {
               {errors.salaryTo.message ?? "Nem megfelelő érték"}
             </Form.Label>
           )}
-        </Form.Field>
+        </Form.Field> */}
         <Controller
           name="type"
           control={control}
@@ -119,6 +121,24 @@ const FilterForm: React.FC = () => {
               {errors.city.message ?? "Nem megfelelő érték"}
             </Form.Label>
           )}
+        </Form.Field>
+        <Form.Field name="salary">
+          <Text as="label" size="2" weight="bold">
+            Fizetési sáv
+          </Text>
+          <Form.Control asChild>
+            <Slider.Root
+              className="SliderRoot"
+              defaultValue={[50]}
+              max={100}
+              step={1}
+            >
+              <Slider.Track className="SliderTrack">
+                <Slider.Range className="SliderRange" />
+              </Slider.Track>
+              <Slider.Thumb className="SliderThumb" aria-label="Volume" />
+            </Slider.Root>
+          </Form.Control>
         </Form.Field>
         <Controller
           control={control}
