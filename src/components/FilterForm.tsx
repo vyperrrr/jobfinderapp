@@ -1,18 +1,20 @@
 import * as Form from "@radix-ui/react-form";
 import {
+  Badge,
   Button,
   Checkbox,
   Flex,
   Select,
+  Slider,
   Text,
   TextField,
 } from "@radix-ui/themes";
 
-import * as Slider from "@radix-ui/react-slider";
-
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
+
+import { ArrowRightIcon, DashIcon } from "@radix-ui/react-icons";
 
 export type Inputs = {
   salaryFrom: number;
@@ -58,7 +60,7 @@ const FilterForm: React.FC = () => {
 
   return (
     <>
-      <Form.Root className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <Form.Root className="space-y-4 p-4" onSubmit={handleSubmit(onSubmit)}>
         {/* <Form.Field {...register("salaryFrom")}>
           <Text as="label" size="2" weight="bold">
             Fizetési sáv alja
@@ -123,23 +125,34 @@ const FilterForm: React.FC = () => {
           )}
         </Form.Field>
         <Form.Field name="salary">
-          <Text as="label" size="2" weight="bold">
-            Fizetési sáv
-          </Text>
+          <Form.Label className="text-sm font-semibold">
+            Fizetési sáv megadása
+          </Form.Label>
           <Form.Control asChild>
-            <Slider.Root
-              className="SliderRoot"
-              defaultValue={[50]}
-              max={100}
-              step={1}
-            >
-              <Slider.Track className="SliderTrack">
-                <Slider.Range className="SliderRange" />
-              </Slider.Track>
-              <Slider.Thumb className="SliderThumb" aria-label="Volume" />
-            </Slider.Root>
+            <div className="space-y-4">
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <Checkbox />
+                  Fizetési sáv
+                </Flex>
+              </Text>
+              <Slider variant="surface" defaultValue={[0, 100]} />
+              <div className="flex gap-x-2">
+                <div className="flex flex-1 gap-x-2">
+                  <TextField.Root size="1" type="number" className="flex-1" />
+                  <Badge size="2" variant="outline">
+                    <DashIcon />
+                  </Badge>
+                  <TextField.Root size="1" type="number" className="flex-1" />
+                </div>
+                <Button variant="solid" size="1">
+                  <ArrowRightIcon />
+                </Button>
+              </div>
+            </div>
           </Form.Control>
         </Form.Field>
+
         <Controller
           control={control}
           name="homeOffice"
