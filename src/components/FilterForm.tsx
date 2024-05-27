@@ -17,10 +17,9 @@ import { compareSearchParams } from "../utils";
 import { ArrowRightIcon, DashIcon } from "@radix-ui/react-icons";
 
 export type Inputs = {
-  salaryFrom: number;
-  salaryTo: number;
   type: "part-time" | "full-time" | "internship";
   city: string;
+  salary: [number, number];
   homeOffice: boolean;
 };
 
@@ -136,8 +135,16 @@ const FilterForm: React.FC = () => {
                   Fizetési sáv
                 </Flex>
               </Text>
-              <Slider variant="surface" defaultValue={[0, 100]} />
-              <div className="flex gap-x-2">
+              <Controller
+                name="salary"
+                control={control}
+                defaultValue={[0, 100]}
+                render={({ field: { onChange, value } }) => (
+                  <Slider variant="surface" value={value} onChange={onChange} />
+                )}
+              />
+
+              <div className="flex items-center gap-x-2">
                 <div className="flex flex-1 gap-x-2">
                   <TextField.Root size="1" type="number" className="flex-1" />
                   <Badge size="2" variant="outline">
