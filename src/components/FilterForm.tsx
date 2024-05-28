@@ -1,11 +1,9 @@
 import * as Form from "@radix-ui/react-form";
 import {
-  Badge,
   Button,
   Checkbox,
   Flex,
   Select,
-  Slider,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -14,12 +12,11 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
 
-import { ArrowRightIcon, DashIcon } from "@radix-ui/react-icons";
-
 export type Inputs = {
   type: "part-time" | "full-time" | "internship";
   city: string;
-  salary: [number, number];
+  salaryFrom: number;
+  salaryTo: number;
   homeOffice: boolean;
 };
 
@@ -60,7 +57,7 @@ const FilterForm: React.FC = () => {
   return (
     <>
       <Form.Root className="space-y-4 p-4" onSubmit={handleSubmit(onSubmit)}>
-        {/* <Form.Field {...register("salaryFrom")}>
+        <Form.Field {...register("salaryFrom")}>
           <Text as="label" size="2" weight="bold">
             Fizetési sáv alja
           </Text>
@@ -85,7 +82,7 @@ const FilterForm: React.FC = () => {
               {errors.salaryTo.message ?? "Nem megfelelő érték"}
             </Form.Label>
           )}
-        </Form.Field> */}
+        </Form.Field>
         <Controller
           name="type"
           control={control}
@@ -123,43 +120,6 @@ const FilterForm: React.FC = () => {
             </Form.Label>
           )}
         </Form.Field>
-        <Form.Field name="salary">
-          <Form.Label className="text-sm font-semibold">
-            Fizetési sáv megadása
-          </Form.Label>
-          <Form.Control asChild>
-            <div className="space-y-4">
-              <Text as="label" size="2">
-                <Flex gap="2">
-                  <Checkbox />
-                  Fizetési sáv
-                </Flex>
-              </Text>
-              <Controller
-                name="salary"
-                control={control}
-                defaultValue={[0, 100]}
-                render={({ field: { onChange, value } }) => (
-                  <Slider variant="surface" value={value} onChange={onChange} />
-                )}
-              />
-
-              <div className="flex items-center gap-x-2">
-                <div className="flex flex-1 gap-x-2">
-                  <TextField.Root size="1" type="number" className="flex-1" />
-                  <Badge size="2" variant="outline">
-                    <DashIcon />
-                  </Badge>
-                  <TextField.Root size="1" type="number" className="flex-1" />
-                </div>
-                <Button variant="solid" size="1">
-                  <ArrowRightIcon />
-                </Button>
-              </div>
-            </div>
-          </Form.Control>
-        </Form.Field>
-
         <Controller
           control={control}
           name="homeOffice"
