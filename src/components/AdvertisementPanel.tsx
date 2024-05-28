@@ -21,11 +21,13 @@ import { Link } from "react-router-dom";
 interface AdvertisementPanelProps {
   advertisement: Job;
   onDelete: () => void;
+  onEdit: (id: number) => void;
 }
 
 const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
   advertisement,
   onDelete,
+  onEdit,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -42,8 +44,6 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
     " - " +
     formatSalary(advertisement.salaryTo);
   console.log(applicants);
-
-  function handleModify() {}
 
   function handleDelete() {
     deleteJob({ id: advertisement.id });
@@ -91,8 +91,11 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               </Button>
             </li>
             <li>
-              <Button variant="outline">
-                <Pencil2Icon onClick={handleModify} />
+              <Button
+                variant="outline"
+                onClick={() => onEdit(advertisement.id)}
+              >
+                <Pencil2Icon />
                 Szerkesztés
               </Button>
             </li>

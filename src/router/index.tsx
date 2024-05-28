@@ -5,6 +5,7 @@ import HomePage from "../pages/Home";
 import AuthPage from "../pages/Auth";
 import JobDetailPage from "../pages/JobDetail";
 import UserProfilePage from "../pages/UserProfile";
+import CreateAdvertisement from "../pages/CreateAdvertisement";
 
 import RequireAuth from "../components/RequireAuth";
 
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
           {
             path: "/profile",
             element: <UserProfilePage />,
+          },
+          {
+            path: "/advertisements/:id?/:mode",
+            element: <CreateAdvertisement />,
           },
         ],
       },

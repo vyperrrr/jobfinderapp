@@ -59,6 +59,20 @@ export const jobsApi = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    createJob: builder.mutation<Job, Partial<Job>>({
+      query: (job) => ({
+        url: "jobs",
+        method: "POST",
+        body: job,
+      }),
+    }),
+    editJob: builder.mutation<Job, Partial<Job>>({
+      query: ({ id, data }) => ({
+        url: `jobs/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -66,3 +80,5 @@ export const { useGetJobsQuery } = jobsApi;
 export const { useGetJobQuery } = jobsApi;
 export const { useGetAllJobsQuery } = jobsApi;
 export const { useDeleteJobMutation } = jobsApi;
+export const { useCreateJobMutation } = jobsApi;
+export const { useEditJobMutation } = jobsApi;
