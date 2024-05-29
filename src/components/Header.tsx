@@ -40,7 +40,7 @@ const Header: React.FC = () => {
           )}
           {user?.role === "company" && (
             <NavigationMenu.Item>
-              <NavLinkButton to="/auth/login" radius="full">
+              <NavLinkButton to="/advertisements/new" radius="full">
                 Álláshirdetés hozzáadása
               </NavLinkButton>
             </NavigationMenu.Item>

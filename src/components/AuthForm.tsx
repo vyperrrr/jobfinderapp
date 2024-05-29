@@ -28,8 +28,7 @@ const AuthForm = () => {
   const params = useParams<{ mode: string }>();
   const mode = params.mode;
 
-  const { register, handleSubmit, control, watch } = useForm<Inputs>();
-  const role = watch("role");
+  const { register, handleSubmit, control } = useForm<Inputs>();
 
   const dispatch = useDispatch();
 

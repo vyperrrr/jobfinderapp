@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
             element: <UserProfilePage />,
           },
           {
-            path: "/advertisements/:id?/:mode",
+            path: "/advertisements/new",
             element: <CreateAdvertisement />,
           },
         ],

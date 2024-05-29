@@ -21,7 +21,7 @@ const Advertisements = () => {
           <Button
             variant="surface"
             color="green"
-            onClick={() => navigate("/advertisements/add")}
+            onClick={() => navigate("/advertisements/new")}
           >
             Új hirdetés feladása
           </Button>
