@@ -1,19 +1,30 @@
 import { useParams } from "react-router";
 import { useGetJobQuery } from "../services/jobsApi";
-import { useApplyForJobMutation } from "../services/applicantsApi";
+import {
+  useApplyForJobMutation,
+  useGetJobsForApplicantQuery,
+  useRemoveJobApplicantMutation,
+} from "../services/applicantsApi";
 
 import { Button, DataList, Section } from "@radix-ui/themes";
-import { FileTextIcon } from "@radix-ui/react-icons";
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 
+import { useAuth } from "../hooks/useAuth";
+
 const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
 
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
-  const [applyForJob, { isSuccess: isApplySuccess, isError: isApplyError }] =
+  const [apply, { isSuccess: isApplySuccess, isError: isApplyError }] =
     useApplyForJobMutation();
+  const [removeApplication] = useRemoveJobApplicantMutation();
+
+  const { data: applications } = useGetJobsForApplicantQuery(user!.id);
+
+  const isApplied = applications?.some((app) => app.jobId === job?.id);
 
   useEffect(() => {
     if (isApplySuccess) {
@@ -33,15 +44,7 @@ const JobDetails = () => {
 
   return (
     <Section className="space-y-10">
-      <div className="flex items-start justify-between">
-        <span>
-          <h1 className="text-4xl font-semibold">Cég részletei</h1>
-        </span>
-        <Button variant="outline" onClick={() => applyForJob({ id: job!.id })}>
-          <FileTextIcon />
-          Jelentkezem a pozícióra
-        </Button>
-      </div>
+      <h1 className="text-4xl font-semibold">Cég részletei</h1>
       <DataList.Root size="3">
         <DataList.Item>
           <DataList.Label minWidth="88px">Név</DataList.Label>
@@ -72,6 +75,22 @@ const JobDetails = () => {
           <DataList.Value>true</DataList.Value>
         </DataList.Item>
       </DataList.Root>
+      {isApplied ? (
+        <div>
+          <p>Már jelentkeztél erre az állásra...</p>
+          <Button
+            variant="outline"
+            color="red"
+            onClick={() => removeApplication(job!.id)}
+          >
+            Jelentkezés lemondása
+          </Button>
+        </div>
+      ) : (
+        <Button variant="outline" onClick={() => apply(job!.id)}>
+          Jelentkezés
+        </Button>
+      )}
     </Section>
   );
 };
