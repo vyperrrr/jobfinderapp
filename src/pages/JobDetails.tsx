@@ -6,12 +6,15 @@ import {
   useRemoveJobApplicantMutation,
 } from "../services/applicantsApi";
 
-import { Button, DataList, Section } from "@radix-ui/themes";
+import { Badge, Button, Callout, Section } from "@radix-ui/themes";
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 
 import { useAuth } from "../hooks/useAuth";
+import { IoLocationSharp } from "react-icons/io5";
+import { CiBadgeDollar } from "react-icons/ci";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +23,10 @@ const JobDetails = () => {
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
   const [apply, { isSuccess: isApplySuccess, isError: isApplyError }] =
     useApplyForJobMutation();
-  const [removeApplication] = useRemoveJobApplicantMutation();
+  const [
+    removeApplication,
+    { isSuccess: isRemoveSuccess, isError: isRemoveError },
+  ] = useRemoveJobApplicantMutation();
 
   const { data: applications } = useGetJobsForApplicantQuery(user!.id);
 
@@ -34,6 +40,14 @@ const JobDetails = () => {
     }
   }, [isApplySuccess, isApplyError]);
 
+  useEffect(() => {
+    if (isRemoveSuccess) {
+      toast.success("Sikeres lejelentkezés!");
+    } else if (isRemoveError) {
+      toast.error("Hiba történt a lejelentkezés során.");
+    }
+  }, [isRemoveSuccess, isRemoveError]);
+
   if (isError) {
     return <div>An error occurred...</div>;
   }
@@ -44,53 +58,54 @@ const JobDetails = () => {
 
   return (
     <Section className="space-y-10">
-      <h1 className="text-4xl font-semibold">Cég részletei</h1>
-      <DataList.Root size="3">
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Név</DataList.Label>
-          <DataList.Value>{job?.company}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Pozíció</DataList.Label>
-          <DataList.Value>{job?.position}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Leírás</DataList.Label>
-          <DataList.Value>{job?.description}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Fizetési sáv</DataList.Label>
-          <DataList.Value>0</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Foglalkoztatás típusa</DataList.Label>
-          <DataList.Value>{job?.type}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Település</DataList.Label>
-          <DataList.Value>{job?.city}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Home Office</DataList.Label>
-          <DataList.Value>true</DataList.Value>
-        </DataList.Item>
-      </DataList.Root>
-      {isApplied ? (
-        <div>
-          <p>Már jelentkeztél erre az állásra...</p>
-          <Button
-            variant="outline"
-            color="red"
-            onClick={() => removeApplication(job!.id)}
-          >
-            Jelentkezés lemondása
+      <div>
+        <h1 className="text-4xl font-semibold">{job?.company}</h1>
+        <span className="flex items-center gap-x-2">
+          <h2 className="text-3xl">{job?.position}</h2>
+          <Badge>{job?.homeOffice ? "Remote" : "On-site"}</Badge>
+        </span>
+        <span className="flex items-center gap-x-1">
+          <IoLocationSharp />
+          <p className="text-sm">{job?.city}</p>
+        </span>
+      </div>
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold">Leírás</h3>
+        <p className="whitespace-pre-wrap text-sm">{job?.description}</p>
+      </div>
+      <div className="space-y-4">
+        <h3 className="text-2xl font-semibold">Fizetési sáv</h3>
+        <span className="flex items-center gap-x-2">
+          <CiBadgeDollar />
+          <p>
+            {job?.salaryFrom} - {job?.salaryTo}
+          </p>
+        </span>
+      </div>
+      <div>
+        {isApplied ? (
+          <div className="space-y-4">
+            <Callout.Root className="flex-1">
+              <Callout.Icon>
+                <InfoCircledIcon />
+              </Callout.Icon>
+              <Callout.Text>Már jelentkeztél erre a pozícióra.</Callout.Text>
+            </Callout.Root>
+            <Button
+              variant="outline"
+              color="red"
+              size="4"
+              onClick={() => removeApplication(job!.id)}
+            >
+              Jelentkezés lemondása
+            </Button>
+          </div>
+        ) : (
+          <Button variant="outline" onClick={() => apply(job!.id)} size="4">
+            Jelentkezés
           </Button>
-        </div>
-      ) : (
-        <Button variant="outline" onClick={() => apply(job!.id)}>
-          Jelentkezés
-        </Button>
-      )}
+        )}
+      </div>
     </Section>
   );
 };

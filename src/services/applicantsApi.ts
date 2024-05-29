@@ -18,9 +18,11 @@ export const applicantsApi = apiSlice.injectEndpoints({
           body: { jobId: id },
         };
       },
+      invalidatesTags: ["Applicant"],
     }),
     getJobApplicants: builder.query<ApplyResponse[], { id?: number }>({
       query: (payload) => `applicants?jobId=${payload.id}`,
+      providesTags: ["Applicant"],
     }),
     removeJobApplicant: builder.mutation<
       { userId: number; jobId: number },
@@ -30,9 +32,11 @@ export const applicantsApi = apiSlice.injectEndpoints({
         url: `applicants?jobId=${jobId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Applicant"],
     }),
     getJobsForApplicant: builder.query<ApplyResponse[], number>({
       query: (userId) => `applicants?userId=${userId}`,
+      providesTags: ["Applicant"],
     }),
   }),
 });
