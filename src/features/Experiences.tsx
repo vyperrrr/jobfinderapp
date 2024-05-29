@@ -25,7 +25,7 @@ const defaultFormState: FormState = {
 };
 
 const Experiences = () => {
-  const { data: experiences, refetch } = useGetExperiencesQuery();
+  const { data: experiences } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
   const [addExperience] = useAddExperienceMutation();
@@ -55,7 +55,6 @@ const Experiences = () => {
         break;
     }
 
-    refetch();
     setAction(undefined);
     setDialogOpen(false);
   };
@@ -73,11 +72,6 @@ const Experiences = () => {
     }
 
     setDialogOpen(true);
-  }
-
-  function handleDelete(id: number) {
-    deleteExperience(id);
-    refetch();
   }
 
   function handleClose() {
@@ -104,7 +98,7 @@ const Experiences = () => {
             key={experience.id}
             experience={experience}
             onModify={() => handleAction("modify", experience)}
-            onDelete={handleDelete}
+            onDelete={() => deleteExperience(experience.id)}
           />
         ))}
       </span>

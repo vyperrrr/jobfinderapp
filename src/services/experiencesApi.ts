@@ -19,6 +19,7 @@ export const experiencesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getExperiences: builder.query<ExperiencesResponse, void>({
       query: () => "experiences",
+      providesTags: ["Experience"],
     }),
     modifyExperience: builder.mutation<Experience, Partial<Experience>>({
       query: (payload) => ({
@@ -26,12 +27,14 @@ export const experiencesApi = apiSlice.injectEndpoints({
         method: "PATCH",
         body: payload,
       }),
+      invalidatesTags: ["Experience"],
     }),
     deleteExperience: builder.mutation<void, number>({
       query: (id) => ({
         url: `experiences/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Experience"],
     }),
     addExperience: builder.mutation<Experience, AddExperiencePayload>({
       query: (payload) => ({
@@ -39,6 +42,7 @@ export const experiencesApi = apiSlice.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["Experience"],
     }),
   }),
 });
