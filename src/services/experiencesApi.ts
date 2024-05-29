@@ -24,7 +24,7 @@ export const experiencesApi = apiSlice.injectEndpoints({
       query: (payload) => ({
         url: `experiences/${payload.id}`,
         method: "PATCH",
-        payload,
+        body: payload,
       }),
     }),
     deleteExperience: builder.mutation<void, number>({
@@ -37,7 +37,7 @@ export const experiencesApi = apiSlice.injectEndpoints({
       query: (payload) => ({
         url: "experiences",
         method: "POST",
-        payload,
+        body: payload,
       }),
     }),
   }),
