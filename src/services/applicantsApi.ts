@@ -32,7 +32,7 @@ export const applicantsApi = apiSlice.injectEndpoints({
       }),
     }),
     getJobsForApplicant: builder.query<ApplyResponse[], number>({
-      query: (userId) => `applicants/userId=${userId}`,
+      query: (userId) => `applicants?userId=${userId}`,
     }),
   }),
 });

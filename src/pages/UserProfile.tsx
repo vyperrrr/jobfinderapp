@@ -2,6 +2,7 @@ import { Badge, DataList, Section } from "@radix-ui/themes";
 import { useAuth } from "../hooks/useAuth";
 import Experiences from "../features/Experiences";
 import Advertisements from "../features/Advertisements";
+import Applications from "../features/Applications";
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -27,7 +28,14 @@ const UserProfile = () => {
           </DataList.Value>
         </DataList.Item>
       </DataList.Root>
-      {user?.role === "company" ? <Advertisements /> : <Experiences />}
+      {user?.role === "company" ? (
+        <Advertisements />
+      ) : (
+        <>
+          <Applications />
+          <Experiences />
+        </>
+      )}
     </Section>
   );
 };
