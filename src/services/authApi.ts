@@ -2,35 +2,33 @@ import { apiSlice } from "../app/api/apiSlice";
 
 import { User } from "../types";
 
-export type LoginParams = {
+interface LoginPayload {
   email: string;
   password: string;
-};
+}
 
-type LoginResponse = {
+interface LoginResponse {
   accessToken: string;
   user: User;
-};
+}
 
-export type RegisterParams = {
+interface RegisterPayload {
   email: string;
   password: string;
   fullname: string;
   role: "company" | "jobseeker";
-};
-
-type RegisterResponse = User;
+}
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    loginUser: builder.mutation<LoginResponse, LoginParams>({
+    loginUser: builder.mutation<LoginResponse, LoginPayload>({
       query: (credentials) => ({
         url: "authentication",
         method: "POST",
         body: { ...credentials, strategy: "local" },
       }),
     }),
-    registerUser: builder.mutation<RegisterResponse, RegisterParams>({
+    registerUser: builder.mutation<User, RegisterPayload>({
       query: (credentials) => {
         return {
           url: "users",

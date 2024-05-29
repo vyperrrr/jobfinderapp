@@ -1,4 +1,6 @@
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { useCreateJobMutation } from "../services/jobsApi";
+
 import * as Form from "@radix-ui/react-form";
 import {
   Checkbox,
@@ -9,9 +11,8 @@ import {
   Flex,
   TextArea,
 } from "@radix-ui/themes";
-import { useCreateJobMutation } from "../services/jobsApi";
 
-interface Inputs {
+interface FormState {
   company: string;
   position: string;
   description: string;
@@ -28,11 +29,11 @@ const AdvertisementForm = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormState>();
 
   const [createJob] = useCreateJobMutation();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => createJob(data);
+  const onSubmit: SubmitHandler<FormState> = (data) => createJob(data);
 
   return (
     <div className="rounded-md bg-slate-800 p-12">
@@ -160,7 +161,7 @@ const AdvertisementForm = () => {
                 <Text as="label" size="2">
                   <Flex gap="2">
                     <Checkbox checked={value} onCheckedChange={onChange} />
-                    Home office lehetőség
+                    Home Office
                   </Flex>
                 </Text>
               </div>

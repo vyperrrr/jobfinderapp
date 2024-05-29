@@ -2,12 +2,18 @@ import { apiSlice } from "../app/api/apiSlice";
 
 import { Experience } from "../types";
 
-type ExperiencesResponse = {
+interface ExperiencesResponse {
   total: number;
   limit: number;
   skip: number;
   data: Experience[];
-};
+}
+
+interface AddExperiencePayload {
+  title: string;
+  company: string;
+  interval: string;
+}
 
 export const experiencesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,23 +21,23 @@ export const experiencesApi = apiSlice.injectEndpoints({
       query: () => "experiences",
     }),
     modifyExperience: builder.mutation<Experience, Partial<Experience>>({
-      query: (body) => ({
-        url: `experiences/${body.id}`,
+      query: (payload) => ({
+        url: `experiences/${payload.id}`,
         method: "PATCH",
-        body,
+        payload,
       }),
     }),
-    deleteExperience: builder.mutation<void, { id: number }>({
-      query: ({ id }) => ({
+    deleteExperience: builder.mutation<void, number>({
+      query: (id) => ({
         url: `experiences/${id}`,
         method: "DELETE",
       }),
     }),
-    addExperience: builder.mutation<Experience, Partial<Experience>>({
-      query: (body) => ({
+    addExperience: builder.mutation<Experience, AddExperiencePayload>({
+      query: (payload) => ({
         url: "experiences",
         method: "POST",
-        body,
+        payload,
       }),
     }),
   }),

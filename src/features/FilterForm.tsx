@@ -12,13 +12,13 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { compareSearchParams } from "../utils";
 
-export type Inputs = {
+interface FormState {
   type: "part-time" | "full-time" | "internship";
   city: string;
   salaryFrom: number;
   salaryTo: number;
   homeOffice: boolean;
-};
+}
 
 const FilterForm: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,11 +28,11 @@ const FilterForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<Inputs>();
+  } = useForm<FormState>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => setFilters(data);
+  const onSubmit: SubmitHandler<FormState> = (data) => setFilters(data);
 
-  const setFilters = (data: Inputs) => {
+  const setFilters = (data: FormState) => {
     if (Object.keys(errors).length != 0) {
       return;
     }
@@ -57,38 +57,41 @@ const FilterForm: React.FC = () => {
   return (
     <>
       <Form.Root className="space-y-4 p-4" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Field {...register("salaryFrom")}>
-          <Text as="label" size="2" weight="bold">
-            Fizetési sáv alja
-          </Text>
-          <Form.Control asChild>
-            <TextField.Root type="number" />
-          </Form.Control>
-          {errors.salaryFrom && (
-            <Form.Label className="text-sm text-red-500">
-              {errors.salaryFrom.message ?? "Nem megfelelő érték"}
-            </Form.Label>
-          )}
-        </Form.Field>
-        <Form.Field {...register("salaryTo")}>
-          <Text as="label" size="2" weight="bold">
-            Fizetési sáv teteje
-          </Text>
-          <Form.Control asChild>
-            <TextField.Root type="number" />
-          </Form.Control>
-          {errors.salaryTo && (
-            <Form.Label className="text-sm text-red-500">
-              {errors.salaryTo.message ?? "Nem megfelelő érték"}
-            </Form.Label>
-          )}
-        </Form.Field>
+        <div className="flex flex-col gap-x-2 gap-y-4 md:flex-row">
+          <Form.Field {...register("salaryFrom")} className="flex-1">
+            <Text as="label" size="2">
+              Fizetési sáv alja
+            </Text>
+            <Form.Control asChild>
+              <TextField.Root type="number" />
+            </Form.Control>
+            {errors.salaryFrom && (
+              <Form.Label className="text-sm text-red-500">
+                {errors.salaryFrom.message ?? "Nem megfelelő érték"}
+              </Form.Label>
+            )}
+          </Form.Field>
+          <Form.Field {...register("salaryTo")} className="flex-1">
+            <Text as="label" size="2">
+              Fizetési sáv teteje
+            </Text>
+            <Form.Control asChild>
+              <TextField.Root type="number" />
+            </Form.Control>
+            {errors.salaryTo && (
+              <Form.Label className="text-sm text-red-500">
+                {errors.salaryTo.message ?? "Nem megfelelő érték"}
+              </Form.Label>
+            )}
+          </Form.Field>
+        </div>
+
         <Controller
           name="type"
           control={control}
           render={({ field: { onChange, value } }) => (
             <Flex direction="column">
-              <Text as="label" size="2" weight="bold">
+              <Text as="label" size="2">
                 Munka típusa
               </Text>
               <Select.Root onValueChange={onChange} value={value}>
@@ -110,7 +113,9 @@ const FilterForm: React.FC = () => {
           )}
         />
         <Form.Field {...register("city")}>
-          <Form.Label className="text-sm font-semibold">Település</Form.Label>
+          <Text as="label" size="2">
+            Település
+          </Text>
           <Form.Control asChild>
             <TextField.Root />
           </Form.Control>
@@ -129,7 +134,7 @@ const FilterForm: React.FC = () => {
               <Text as="label" size="2">
                 <Flex gap="2">
                   <Checkbox checked={value} onCheckedChange={onChange} />
-                  Home office lehetőség
+                  Home Office
                 </Flex>
               </Text>
             </div>

@@ -6,7 +6,7 @@ import NavLinkButton from "./NavLinkButton";
 
 import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import { logout } from "../features/authSlice";
+import { logout } from "../features/auth/authSlice";
 
 const Header: React.FC = () => {
   const { user, token } = useAuth();

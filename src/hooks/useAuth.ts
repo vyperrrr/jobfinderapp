@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { getUser } from "../features/authSlice";
-import { getToken } from "../features/authSlice";
+import { getUser } from "../features/auth/authSlice";
+import { getToken } from "../features/auth/authSlice";
 
 export const useAuth = () => {
   const user = useSelector(getUser);

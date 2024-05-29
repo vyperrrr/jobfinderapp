@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Job } from "../types";
-import { formatSalary } from "../utils";
+
+import { Button } from "@radix-ui/themes";
+import { Badge } from "@radix-ui/themes";
+
 import {
   BackpackIcon,
   SewingPinIcon,
@@ -8,12 +11,9 @@ import {
   Link2Icon,
 } from "@radix-ui/react-icons";
 import { CiBadgeDollar } from "react-icons/ci";
-import { Button } from "@radix-ui/themes";
-import { Badge } from "@radix-ui/themes";
 
 const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
-  const salaryFormatted =
-    formatSalary(job.salaryFrom) + " - " + formatSalary(job.salaryTo);
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-40 items-center justify-between rounded-sm bg-slate-50  px-8 dark:bg-slate-800 dark:text-slate-50">
@@ -43,15 +43,14 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
         <ul>
           <li className="flex items-center justify-center gap-x-2">
             <CiBadgeDollar className="h-8 w-8" />
-            <p className="text-lg">{salaryFormatted}</p>
+            <p className="text-lg">0</p>
           </li>
         </ul>
-        <Link to={`/jobs/${job.id}`}>
-          <Button variant="soft">
-            <Link2Icon />
-            Részletek
-          </Button>
-        </Link>
+
+        <Button variant="soft" onClick={() => navigate(`/jobs/${job.id}`)}>
+          <Link2Icon />
+          Részletek
+        </Button>
       </span>
     </div>
   );

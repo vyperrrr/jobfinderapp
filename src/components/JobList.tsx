@@ -5,13 +5,13 @@ import { useGetJobsQuery } from "../services/jobsApi";
 
 import { Job } from "../types";
 
-export type Filters = {
+interface Filters {
   salaryFrom: number;
   salaryTo: number;
   type: "part-time" | "full-time" | "internship";
   city: string;
   homeOffice: boolean;
-};
+}
 
 const JobList: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -24,6 +24,8 @@ const JobList: React.FC = () => {
     ...filters,
   });
 
+  const jobs = data?.data;
+
   if (isError) {
     return <div>An error occurred...</div>;
   }
@@ -32,13 +34,13 @@ const JobList: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const jobs = data?.data.map((job: Job) => {
-    return <JobPanel key={job.id} job={job} />;
-  });
-
   return (
     <div>
-      <span className="space-y-6">{jobs}</span>
+      <span className="space-y-6">
+        {jobs?.map((job: Job) => {
+          return <JobPanel key={job.id} job={job} />;
+        })}
+      </span>
     </div>
   );
 };

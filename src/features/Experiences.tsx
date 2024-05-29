@@ -76,7 +76,7 @@ const Experiences = () => {
   }
 
   function handleDelete(id: number) {
-    deleteExperience({ id });
+    deleteExperience(id);
     refetch();
   }
 

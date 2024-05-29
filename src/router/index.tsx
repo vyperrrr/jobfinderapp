@@ -3,11 +3,11 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../pages/layouts/RootLayout";
 import HomePage from "../pages/Home";
 import AuthPage from "../pages/Auth";
-import JobDetailPage from "../pages/JobDetail";
+import JobDetailsPage from "../pages/JobDetails";
 import UserProfilePage from "../pages/UserProfile";
-import CreateAdvertisement from "../pages/CreateAdvertisement";
+import CreateAdvertisementPage from "../pages/CreateAdvertisement";
 
-import RequireAuth from "../components/RequireAuth";
+import RequireAuth from "../pages/RequireAuth";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/jobs/:id", element: <JobDetailPage /> },
+      { path: "/jobs/:id", element: <JobDetailsPage /> },
       {
         element: <RequireAuth />,
         children: [
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/advertisements/new",
-            element: <CreateAdvertisement />,
+            element: <CreateAdvertisementPage />,
           },
         ],
       },

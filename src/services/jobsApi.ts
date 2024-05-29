@@ -2,29 +2,28 @@ import { apiSlice } from "../app/api/apiSlice";
 
 import { Job } from "../types";
 
-export type Jobs = {
+interface JobsResponse {
   total: number;
   limit: number;
   skip: number;
   data: [Job];
-};
+}
 
-type JobsParams = {
+interface JobsPayload {
   company: string;
   salaryFrom: number;
   salaryTo: number;
   type: "part-time" | "full-time" | "internship";
   city: string;
   homeOffice: boolean;
-};
-
-type JobParams = {
-  id: string;
-};
+}
 
 export const jobsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getJobs: builder.query<Jobs, Partial<JobsParams>>({
+    getJobs: builder.query<
+      JobsResponse,
+      Partial<JobsPayload> | { userId?: number }
+    >({
       query: (filters) => {
         const params = new URLSearchParams();
         Object.entries(filters).forEach(([key, value]) => {
@@ -46,39 +45,46 @@ export const jobsApi = apiSlice.injectEndpoints({
         });
         return `jobs?${params.toString()}`;
       },
+      providesTags: ["Job"],
     }),
-    getJob: builder.query<Job, Partial<JobParams>>({
+    getJob: builder.query<Job, { id?: string }>({
       query: ({ id }) => `jobs/${id}`,
     }),
-    getAllJobs: builder.query<Jobs, void>({
+    getAllJobs: builder.query<JobsResponse, void>({
       query: () => "jobs",
+      providesTags: ["Job"],
     }),
-    deleteJob: builder.mutation<void, { id: number }>({
-      query: ({ id }) => ({
+    deleteJob: builder.mutation<void, number>({
+      query: (id) => ({
         url: `jobs/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Job"],
     }),
-    createJob: builder.mutation<Job, Partial<Job>>({
-      query: (job) => ({
+    createJob: builder.mutation<Job, Omit<Job, "id">>({
+      query: (payload) => ({
         url: "jobs",
         method: "POST",
-        body: job,
+        body: payload,
       }),
+      invalidatesTags: ["Job"],
     }),
-    editJob: builder.mutation<Job, Partial<Job>>({
-      query: ({ id, data }) => ({
-        url: `jobs/${id}`,
+    editJob: builder.mutation<Job, Job>({
+      query: (payload) => ({
+        url: `jobs/${payload.id}`,
         method: "PATCH",
-        body: data,
+        body: payload,
       }),
+      invalidatesTags: ["Job"],
     }),
   }),
 });
 
-export const { useGetJobsQuery } = jobsApi;
-export const { useGetJobQuery } = jobsApi;
-export const { useGetAllJobsQuery } = jobsApi;
-export const { useDeleteJobMutation } = jobsApi;
-export const { useCreateJobMutation } = jobsApi;
-export const { useEditJobMutation } = jobsApi;
+export const {
+  useGetJobsQuery,
+  useGetJobQuery,
+  useGetAllJobsQuery,
+  useDeleteJobMutation,
+  useCreateJobMutation,
+  useEditJobMutation,
+} = jobsApi;

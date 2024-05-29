@@ -1,6 +1,6 @@
 import { Button, Section } from "@radix-ui/themes";
 import SearchBar from "../components/SearchBar";
-import FilterForm from "../components/FilterForm";
+import FilterForm from "../features/FilterForm";
 import { ThickArrowDownIcon } from "@radix-ui/react-icons";
 import JobList from "../components/JobList";
 import { DropdownMenu } from "@radix-ui/themes";

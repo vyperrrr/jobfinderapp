@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import {
   useLoginUserMutation,
   useRegisterUserMutation,
-} from "../services/authApi";
-import { login } from "../features/authSlice";
+} from "../../services/authApi";
+import { login } from "./authSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";

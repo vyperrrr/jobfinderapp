@@ -8,32 +8,38 @@ interface ApplyResponse {
   job: Job;
 }
 
-interface getJobApplicantsResponse {
-  userId: number;
-  jobId: number;
-  user: User;
-  job: Job;
-}
-
 export const applicantsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    applyForJob: builder.mutation<ApplyResponse, { jobId: number }>({
-      query: (body) => {
+    applyForJob: builder.mutation<ApplyResponse, { id?: string }>({
+      query: (payload) => {
         return {
           url: `applicants`,
           method: "POST",
-          body,
+          body: { jobId: payload.id },
         };
       },
     }),
-    getJobApplicants: builder.query<
-      getJobApplicantsResponse[],
-      { jobId: number }
+    getJobApplicants: builder.query<ApplyResponse[], { id?: number }>({
+      query: (payload) => `applicants?jobId=${payload.id}`,
+    }),
+    removeJobApplicant: builder.mutation<
+      { userId: number; jobId: number },
+      number
     >({
-      query: ({ jobId }) => `applicants?jobId=${jobId}`,
+      query: (jobId) => ({
+        url: `applicants/jobId=${jobId}`,
+        method: "DELETE",
+      }),
+    }),
+    getJobsForApplicant: builder.query<ApplyResponse[], number>({
+      query: (userId) => `applicants/userId=${userId}`,
     }),
   }),
 });
 
-export const { useApplyForJobMutation } = applicantsApi;
-export const { useGetJobApplicantsQuery } = applicantsApi;
+export const {
+  useApplyForJobMutation,
+  useGetJobApplicantsQuery,
+  useRemoveJobApplicantMutation,
+  useGetJobsForApplicantQuery,
+} = applicantsApi;

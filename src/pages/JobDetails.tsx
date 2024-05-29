@@ -1,28 +1,18 @@
 import { useParams } from "react-router";
 import { useGetJobQuery } from "../services/jobsApi";
-import { Button, DataList, Section } from "@radix-ui/themes";
-import { formatSalary } from "../utils";
-import { toast } from "react-toastify";
-
-import { FileTextIcon } from "@radix-ui/react-icons";
-
 import { useApplyForJobMutation } from "../services/applicantsApi";
 
-const JobDetail = () => {
+import { Button, DataList, Section } from "@radix-ui/themes";
+import { FileTextIcon } from "@radix-ui/react-icons";
+
+import { toast } from "react-toastify";
+
+const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
+
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
   const [applyForJob, { isSuccess: isApplySuccess, isError: isApplyError }] =
     useApplyForJobMutation();
-
-  const handleApply = () => {
-    applyForJob({ jobId: job!.id });
-    if (isApplySuccess) {
-      toast.success("Sikeres jelentkezés!");
-    }
-    if (isApplyError) {
-      toast.error("Hiba történt a jelentkezés során.");
-    }
-  };
 
   if (isError) {
     return <div>An error occurred...</div>;
@@ -32,10 +22,14 @@ const JobDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const salaryFormatted =
-    formatSalary(job!.salaryFrom) + " - " + formatSalary(job!.salaryTo);
-
-  const hasHomeOffice = job?.homeOffice ? "Igen" : "Nem";
+  const handleApply = () => {
+    applyForJob({ id });
+    if (isApplySuccess) {
+      toast.success("Sikeres jelentkezés!");
+    } else if (isApplyError) {
+      toast.error("Hiba történt a jelentkezés során.");
+    }
+  };
 
   return (
     <Section className="space-y-10">
@@ -63,7 +57,7 @@ const JobDetail = () => {
         </DataList.Item>
         <DataList.Item>
           <DataList.Label minWidth="88px">Fizetési sáv</DataList.Label>
-          <DataList.Value>{salaryFormatted}</DataList.Value>
+          <DataList.Value>0</DataList.Value>
         </DataList.Item>
         <DataList.Item>
           <DataList.Label minWidth="88px">Foglalkoztatás típusa</DataList.Label>
@@ -75,11 +69,11 @@ const JobDetail = () => {
         </DataList.Item>
         <DataList.Item>
           <DataList.Label minWidth="88px">Home Office</DataList.Label>
-          <DataList.Value>{hasHomeOffice}</DataList.Value>
+          <DataList.Value>true</DataList.Value>
         </DataList.Item>
       </DataList.Root>
     </Section>
   );
 };
 
-export default JobDetail;
+export default JobDetails;

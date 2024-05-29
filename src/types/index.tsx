@@ -8,7 +8,6 @@ export type Job = {
   type: string;
   city: string;
   homeOffice: boolean;
-  userId: number;
 };
 
 export type User = {
@@ -23,6 +22,4 @@ export type Experience = {
   company: string;
   title: string;
   interval: string;
-  userId: number;
-  user: User;
 };

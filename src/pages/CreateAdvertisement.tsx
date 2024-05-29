@@ -1,5 +1,5 @@
 import { Section } from "@radix-ui/themes";
-import AdvertisementForm from "../components/AdvertisementForm";
+import AdvertisementForm from "../features/AdvertisementForm";
 
 const CreateAdvertisement = () => {
   return (

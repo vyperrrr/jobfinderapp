@@ -1,5 +1,12 @@
 import { Job } from "../types";
 
+import { useDeleteJobMutation } from "../services/jobsApi";
+import { useGetJobApplicantsQuery } from "../services/applicantsApi";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Badge, Button, ScrollArea } from "@radix-ui/themes";
+
 import {
   BackpackIcon,
   SewingPinIcon,
@@ -9,45 +16,25 @@ import {
 } from "@radix-ui/react-icons";
 import { CiBadgeDollar } from "react-icons/ci";
 
-import { formatSalary } from "../utils";
-
-import { Badge, Button, ScrollArea } from "@radix-ui/themes";
-
-import { useDeleteJobMutation } from "../services/jobsApi";
-import { useGetJobApplicantsQuery } from "../services/applicantsApi";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
 interface AdvertisementPanelProps {
   advertisement: Job;
-  onDelete: () => void;
   onEdit: (id: number) => void;
 }
 
 const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
   advertisement,
-  onDelete,
   onEdit,
 }) => {
-  const [open, setOpen] = useState(false);
+  const { data: applicants } = useGetJobApplicantsQuery({
+    id: advertisement.id,
+  });
 
   const [deleteJob] = useDeleteJobMutation();
-  const { data: applicants } = useGetJobApplicantsQuery(
-    {
-      jobId: advertisement.id,
-    },
-    { skip: !open || !advertisement },
-  );
 
-  const salaryFormatted =
-    formatSalary(advertisement.salaryFrom) +
-    " - " +
-    formatSalary(advertisement.salaryTo);
-  console.log(applicants);
+  const [open, setOpen] = useState(false);
 
   function handleDelete() {
-    deleteJob({ id: advertisement.id });
-    onDelete();
+    deleteJob(advertisement.id);
   }
 
   return (
@@ -75,7 +62,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
             </li>
             <li>
               <CiBadgeDollar />
-              <p>{salaryFormatted}</p>
+              <p>0</p>
             </li>
           </ul>
         </span>

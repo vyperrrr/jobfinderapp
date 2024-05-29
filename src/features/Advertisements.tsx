@@ -1,17 +1,19 @@
 import { Button } from "@radix-ui/themes";
 import AdvertisementPanel from "../components/AdvertisementPanel";
-import { useGetAllJobsQuery } from "../services/jobsApi";
+import { useGetJobsQuery } from "../services/jobsApi";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router";
+import { Job } from "../types";
 
 const Advertisements = () => {
   const { user } = useAuth();
-  const { data: jobs, refetch } = useGetAllJobsQuery();
-
-  const advertisements =
-    jobs?.data.filter((job) => job.userId === user?.id) || [];
+  const { data } = useGetJobsQuery({
+    userId: user.id,
+  });
 
   const navigate = useNavigate();
+
+  const jobs = data?.data;
 
   return (
     <div className="space-y-4">
@@ -30,11 +32,10 @@ const Advertisements = () => {
         <h2 className="text-xl">A te hirdetéseid</h2>
       </div>
       <div className="space-y-4">
-        {advertisements.map((advertisement) => (
+        {jobs?.map((job: Job) => (
           <AdvertisementPanel
-            key={advertisement.id}
-            advertisement={advertisement}
-            onDelete={() => refetch()}
+            key={job.id}
+            advertisement={job}
             onEdit={(id) => navigate(`/advertisements/${id}/edit`)}
           />
         ))}
