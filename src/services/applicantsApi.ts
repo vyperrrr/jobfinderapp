@@ -10,7 +10,7 @@ interface ApplyResponse {
 
 export const applicantsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    applyForJob: builder.mutation<ApplyResponse, { id?: string }>({
+    applyForJob: builder.mutation<ApplyResponse, { id?: number }>({
       query: (payload) => {
         return {
           url: `applicants`,

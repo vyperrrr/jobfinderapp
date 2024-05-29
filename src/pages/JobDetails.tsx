@@ -6,6 +6,7 @@ import { Button, DataList, Section } from "@radix-ui/themes";
 import { FileTextIcon } from "@radix-ui/react-icons";
 
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +14,14 @@ const JobDetails = () => {
   const { data: job, isError, isLoading } = useGetJobQuery({ id });
   const [applyForJob, { isSuccess: isApplySuccess, isError: isApplyError }] =
     useApplyForJobMutation();
+
+  useEffect(() => {
+    if (isApplySuccess) {
+      toast.success("Sikeres jelentkezés!");
+    } else if (isApplyError) {
+      toast.error("Hiba történt a jelentkezés során.");
+    }
+  }, [isApplySuccess, isApplyError]);
 
   if (isError) {
     return <div>An error occurred...</div>;
@@ -22,22 +31,13 @@ const JobDetails = () => {
     return <div>Loading...</div>;
   }
 
-  const handleApply = () => {
-    applyForJob({ id });
-    if (isApplySuccess) {
-      toast.success("Sikeres jelentkezés!");
-    } else if (isApplyError) {
-      toast.error("Hiba történt a jelentkezés során.");
-    }
-  };
-
   return (
     <Section className="space-y-10">
       <div className="flex items-start justify-between">
         <span>
           <h1 className="text-4xl font-semibold">Cég részletei</h1>
         </span>
-        <Button variant="outline" onClick={handleApply}>
+        <Button variant="outline" onClick={() => applyForJob({ id: job!.id })}>
           <FileTextIcon />
           Jelentkezem a pozícióra
         </Button>
