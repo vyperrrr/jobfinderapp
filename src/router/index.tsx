@@ -9,6 +9,7 @@ import CreateAdvertisementPage from "../pages/CreateAdvertisement";
 import EditAdvertisementPage from "../pages/EditAdvertisement";
 
 import RequireAuth from "../pages/RequireAuth";
+import RequireCompany from "../pages/RequireCompany";
 
 export const router = createBrowserRouter([
   {
@@ -25,12 +26,17 @@ export const router = createBrowserRouter([
             element: <UserProfilePage />,
           },
           {
-            path: "/advertisements/new",
-            element: <CreateAdvertisementPage />,
-          },
-          {
-            path: "/advertisements/:id/edit",
-            element: <EditAdvertisementPage />,
+            element: <RequireCompany />,
+            children: [
+              {
+                path: "/advertisements/new",
+                element: <CreateAdvertisementPage />,
+              },
+              {
+                path: "/advertisements/:id/edit",
+                element: <EditAdvertisementPage />,
+              },
+            ],
           },
         ],
       },

@@ -12,6 +12,8 @@ import {
 } from "@radix-ui/react-icons";
 import { CiBadgeDollar } from "react-icons/ci";
 
+import { prettyPrint } from "../utils";
+
 const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
   const navigate = useNavigate();
 
@@ -43,7 +45,9 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
         <ul>
           <li className="flex items-center justify-center gap-x-2">
             <CiBadgeDollar className="h-8 w-8" />
-            <p className="text-lg">0</p>
+            <p className="text-lg">
+              {prettyPrint(job.salaryFrom)} - {prettyPrint(job.salaryTo)}
+            </p>
           </li>
         </ul>
 
