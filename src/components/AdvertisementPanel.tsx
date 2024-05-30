@@ -1,10 +1,11 @@
 import { Job } from "../types";
 
 import { useDeleteJobMutation } from "../services/jobsApi";
-import { useGetJobApplicantsQuery } from "../services/applicantsApi";
 import { useState } from "react";
 
-import { Badge, Button, ScrollArea } from "@radix-ui/themes";
+import { Badge, Button } from "@radix-ui/themes";
+
+import Applicants from "../features/Applicants";
 
 import {
   BackpackIcon,
@@ -24,13 +25,9 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
   advertisement,
   onEdit,
 }) => {
-  const { data: applicants } = useGetJobApplicantsQuery({
-    id: advertisement.id,
-  });
+  const [open, setOpen] = useState(false);
 
   const [deleteJob] = useDeleteJobMutation();
-
-  const [open, setOpen] = useState(false);
 
   function handleDelete() {
     deleteJob(advertisement.id);
@@ -93,33 +90,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
           </ul>
         </span>
       </div>
-      <div className={open ? "block" : "hidden"}>
-        {applicants?.length === 0 ? (
-          <h1>Nincsenek jelentkezők</h1>
-        ) : (
-          <ScrollArea type="auto" scrollbars="vertical">
-            <ul className="space-y-2">
-              {applicants?.map((applicant) => (
-                <li
-                  key={applicant.user.id}
-                  className="rounded-md bg-slate-700 p-4"
-                >
-                  <span className="flex items-center justify-between">
-                    <ul className="flex flex-col">
-                      <li>
-                        <p className="font-semibold">
-                          {applicant.user.fullname}
-                        </p>
-                      </li>
-                      <li className="text-xs">{applicant.user.email}</li>
-                    </ul>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </ScrollArea>
-        )}
-      </div>
+      {open && <Applicants advertisementId={advertisement.id} />}
     </>
   );
 };
