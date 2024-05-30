@@ -71,13 +71,15 @@ const Header: React.FC = () => {
         </NavigationMenu.List>
         <NavigationMenu.Viewport />
       </NavigationMenu.Root>
-      <NavigationMenu.Root className="border-b-1 flex items-center justify-between p-6 dark:bg-slate-800">
+      <NavigationMenu.Root className="border-b-1 flex items-center justify-between rounded-md border-b-4 border-b-orange-500 p-6 shadow-md dark:bg-slate-800">
         {/* Logo */}
         <NavigationMenu.List className="flex items-center justify-end gap-4">
           <NavigationMenu.Item>
             <span className="flex items-center justify-center gap-x-2">
               <NavLink to="/" end>
-                <Heading>Állásportál</Heading>
+                <Heading className="font-mono tracking-tight ">
+                  Állásportál
+                </Heading>
               </NavLink>
             </span>
           </NavigationMenu.Item>
