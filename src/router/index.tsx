@@ -6,6 +6,7 @@ import AuthPage from "../pages/Auth";
 import JobDetailsPage from "../pages/JobDetails";
 import UserProfilePage from "../pages/UserProfile";
 import CreateAdvertisementPage from "../pages/CreateAdvertisement";
+import EditAdvertisementPage from "../pages/EditAdvertisement";
 
 import RequireAuth from "../pages/RequireAuth";
 
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
           {
             path: "/advertisements/new",
             element: <CreateAdvertisementPage />,
+          },
+          {
+            path: "/advertisements/:id/edit",
+            element: <EditAdvertisementPage />,
           },
         ],
       },

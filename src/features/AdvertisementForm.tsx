@@ -1,5 +1,4 @@
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
-import { useCreateJobMutation } from "../services/jobsApi";
 
 import * as Form from "@radix-ui/react-form";
 import {
@@ -11,29 +10,38 @@ import {
   Flex,
   TextArea,
 } from "@radix-ui/themes";
+import { useEffect } from "react";
+import { Job } from "../types";
 
-interface FormState {
-  company: string;
-  position: string;
-  description: string;
-  salaryFrom: number;
-  salaryTo: number;
-  type: "part-time" | "full-time" | "internship";
-  city: string;
-  homeOffice: boolean;
+interface AdvertisementFormProps {
+  defaultValues?: Job;
+  submitAction: (data: FormState) => void;
 }
 
-const AdvertisementForm = () => {
+type FormState = Job;
+
+const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
+  defaultValues,
+  submitAction,
+}) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<FormState>();
 
-  const [createJob] = useCreateJobMutation();
+  const onSubmit: SubmitHandler<FormState> = (data) => submitAction(data);
 
-  const onSubmit: SubmitHandler<FormState> = (data) => createJob(data);
+  useEffect(() => {
+    if (defaultValues)
+      reset({
+        ...defaultValues,
+        homeOffice:
+          (defaultValues.homeOffice as unknown as number) === 0 ? false : true,
+      });
+  }, [defaultValues, reset]);
 
   return (
     <div className="rounded-md bg-slate-800 p-12">
@@ -155,7 +163,6 @@ const AdvertisementForm = () => {
           <Controller
             control={control}
             name="homeOffice"
-            defaultValue={false}
             render={({ field: { onChange, value } }) => (
               <div>
                 <Text as="label" size="2">
@@ -169,7 +176,7 @@ const AdvertisementForm = () => {
           />
           <Form.Submit asChild>
             <Button size="3" variant="surface" className="float-end">
-              Létrehozás
+              Mentés
             </Button>
           </Form.Submit>
         </Form.Root>

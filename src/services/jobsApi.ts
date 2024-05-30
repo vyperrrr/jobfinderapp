@@ -69,12 +69,14 @@ export const jobsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Job"],
     }),
-    editJob: builder.mutation<Job, Job>({
-      query: (payload) => ({
-        url: `jobs/${payload.id}`,
-        method: "PATCH",
-        body: payload,
-      }),
+    editJob: builder.mutation<Job, { id: number; data: Job }>({
+      query: (payload) => {
+        return {
+          url: `jobs/${payload.id}`,
+          method: "PATCH",
+          body: payload.data,
+        };
+      },
       invalidatesTags: ["Job"],
     }),
   }),

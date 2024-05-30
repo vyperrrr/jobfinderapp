@@ -3,7 +3,6 @@ import { Job } from "../types";
 import { useDeleteJobMutation } from "../services/jobsApi";
 import { useGetJobApplicantsQuery } from "../services/applicantsApi";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { Badge, Button, ScrollArea } from "@radix-ui/themes";
 
@@ -114,14 +113,6 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
                       </li>
                       <li className="text-xs">{applicant.user.email}</li>
                     </ul>
-                    <span className="flex gap-x-2">
-                      <Button variant="soft" color="red">
-                        Jelentkező eltávolítása
-                      </Button>
-                      <Link to={`/profile/${applicant.user.id}`}>
-                        <Button variant="surface">Tovább a profilra</Button>
-                      </Link>
-                    </span>
                   </span>
                 </li>
               ))}
