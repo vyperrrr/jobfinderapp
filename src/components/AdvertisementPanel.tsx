@@ -36,7 +36,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
 
   return (
     <>
-      <div className="flex min-h-40 items-center justify-between rounded-md border-b-8 border-l-4 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
+      <div className="flex min-h-40 items-center justify-between rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
         <span className="flex flex-col items-start gap-y-4">
           <span className="flex items-center gap-x-2">
             <h2 className="text-2xl font-semibold ">
