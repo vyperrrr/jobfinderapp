@@ -142,7 +142,7 @@ const FilterForm: React.FC = () => {
         />
         <span className="flex gap-x-2">
           <Form.Submit asChild>
-            <Button size="3" variant="outline">
+            <Button size="3" variant="outline" className="cursor-pointer">
               Szűrők alkalmazása
             </Button>
           </Form.Submit>
@@ -154,6 +154,7 @@ const FilterForm: React.FC = () => {
               event.preventDefault();
               removeFilters();
             }}
+            className="cursor-pointer"
           >
             Szűrők eltávolítása
           </Button>

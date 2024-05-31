@@ -12,7 +12,7 @@ const Home: React.FC = () => {
         <SearchBar />
         <DropdownMenu.Root dir="rtl">
           <DropdownMenu.Trigger>
-            <Button variant="outline" size="3">
+            <Button variant="outline" size="3" className="cursor-pointer">
               <ThickArrowDownIcon />
               Szűrők
             </Button>

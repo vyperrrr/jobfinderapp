@@ -20,19 +20,27 @@ const Header: React.FC = () => {
         {/* Right side section */}
         <NavigationMenu.List className="flex items-center justify-end gap-2">
           <NavigationMenu.Item>
-            <NavLinkButton to="/" radius="full">
+            <NavLinkButton to="/" radius="full" className="cursor-pointer">
               Főoldal
             </NavLinkButton>
           </NavigationMenu.Item>
           {!token && (
             <>
               <NavigationMenu.Item>
-                <NavLinkButton to="/auth/login" radius="full">
+                <NavLinkButton
+                  to="/auth/login"
+                  radius="full"
+                  className="cursor-pointer"
+                >
                   Bejelentkezés
                 </NavLinkButton>
               </NavigationMenu.Item>
               <NavigationMenu.Item>
-                <NavLinkButton to="/auth/register" radius="full">
+                <NavLinkButton
+                  to="/auth/register"
+                  radius="full"
+                  className="cursor-pointer"
+                >
                   Regisztráció
                 </NavLinkButton>
               </NavigationMenu.Item>
@@ -40,7 +48,11 @@ const Header: React.FC = () => {
           )}
           {user?.role === "company" && (
             <NavigationMenu.Item>
-              <NavLinkButton to="/advertisements/new" radius="full">
+              <NavLinkButton
+                to="/advertisements/new"
+                radius="full"
+                className="cursor-pointer"
+              >
                 Álláshirdetés hozzáadása
               </NavLinkButton>
             </NavigationMenu.Item>
@@ -55,13 +67,19 @@ const Header: React.FC = () => {
                     width="24"
                     height="24"
                     radius="full"
+                    className="cursor-pointer"
                   />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content variant="soft">
                   <NavLink to="/profile">
-                    <DropdownMenu.Item>Profil </DropdownMenu.Item>
+                    <DropdownMenu.Item className="cursor-pointer">
+                      Profil{" "}
+                    </DropdownMenu.Item>
                   </NavLink>
-                  <DropdownMenu.Item onClick={() => dispatch(logout())}>
+                  <DropdownMenu.Item
+                    onClick={() => dispatch(logout())}
+                    className="cursor-pointer"
+                  >
                     Kijelentkezés
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>

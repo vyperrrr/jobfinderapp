@@ -83,11 +83,14 @@ const Experiences = () => {
     <div>
       <span className="space-y-4">
         <span className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
+          <h1 className="text-3xl font-semibold underline underline-offset-4">
+            Tapasztalatok
+          </h1>
           <Button
             variant="outline"
             color="green"
             onClick={() => handleAction("add")}
+            className="cursor-pointer"
           >
             Tapasztalat hozzáadása
           </Button>
@@ -138,7 +141,9 @@ const Experiences = () => {
               </Form.Control>
             </Form.Field>
             <span className="float-right mt-6 flex items-center justify-end gap-x-2">
-              <Button onClick={handleClose}>Vissza</Button>
+              <Button onClick={handleClose} className="cursor-pointer">
+                Vissza
+              </Button>
               <Form.Submit asChild>
                 <Button variant="soft">
                   {action === "modify" ? "Módosítás" : "Hozzáadás"}

@@ -14,7 +14,7 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="flex h-40 items-center justify-between rounded-sm bg-slate-50  px-8 dark:bg-slate-800 dark:text-slate-50">
+    <div className="flex h-40 items-center justify-between rounded-md rounded-sm  border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
       <span className="flex flex-col gap-y-4">
         <p className="text-2xl font-semibold">{experience.title}</p>
         <ul className="flex gap-x-4 [&>li]:flex [&>li]:items-center [&>li]:gap-x-1">
@@ -31,7 +31,11 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
       <span>
         <ul className="flex gap-x-4">
           <li>
-            <Button variant="outline" onClick={onModify}>
+            <Button
+              variant="outline"
+              onClick={onModify}
+              className="cursor-pointer"
+            >
               <Pencil2Icon />
               Szerkesztés
             </Button>
@@ -41,6 +45,7 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
               variant="soft"
               color="red"
               onClick={() => onDelete(experience.id)}
+              className="cursor-pointer"
             >
               Törlés
             </Button>

@@ -21,7 +21,9 @@ const Applications = () => {
   return (
     <div>
       <span className="space-y-4">
-        <h1 className="text-3xl font-semibold">Jelentkezéseim</h1>
+        <h1 className="text-3xl font-semibold underline underline-offset-4">
+          Jelentkezéseim
+        </h1>
         {applications?.map((application) => (
           <JobPanel key={application.jobId} job={application.job} />
         ))}

@@ -31,7 +31,7 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
           </li>
           <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
             <TimerIcon className="h-4 w-4 text-emerald-400" />
-            <p className="text-xs font-semibold">{job.type}</p>
+            <p className="text-xs font-semibold capitalize">{job.type}</p>
           </li>
           <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
             <SewingPinIcon className="h-4 w-4 text-emerald-400" />
@@ -52,7 +52,11 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
         </ul>
         <ul className="flex gap-x-4">
           <li>
-            <Button variant="soft" onClick={() => navigate(`/jobs/${job.id}`)}>
+            <Button
+              variant="soft"
+              onClick={() => navigate(`/jobs/${job.id}`)}
+              className="cursor-pointer"
+            >
               <p>Részletek</p>
               <DoubleArrowRightIcon />
             </Button>

@@ -175,7 +175,11 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
             )}
           />
           <Form.Submit asChild>
-            <Button size="3" variant="surface" className="float-end">
+            <Button
+              size="3"
+              variant="surface"
+              className="float-end cursor-pointer"
+            >
               Mentés
             </Button>
           </Form.Submit>

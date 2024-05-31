@@ -13,6 +13,7 @@ import {
   Pencil2Icon,
   TimerIcon,
   Link2Icon,
+  CrossCircledIcon,
 } from "@radix-ui/react-icons";
 import { CiBadgeDollar } from "react-icons/ci";
 import { prettyPrint } from "../utils";
@@ -53,7 +54,9 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
             </li>
             <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
               <TimerIcon className="h-4 w-4 text-emerald-400" />
-              <p className="text-xs font-semibold">{advertisement.type}</p>
+              <p className="text-xs font-semibold capitalize">
+                {advertisement.type}
+              </p>
             </li>
             <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
               <SewingPinIcon className="h-4 w-4 text-emerald-400" />
@@ -77,6 +80,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               <Button
                 variant="outline"
                 onClick={() => setOpen((prevOpen) => !prevOpen)}
+                className="cursor-pointer"
               >
                 <Link2Icon />
                 {open ? "Jelentkezők elrejtése" : "Jelentkezők megtekintése"}
@@ -86,14 +90,21 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               <Button
                 variant="outline"
                 onClick={() => onEdit(advertisement.id)}
+                className="cursor-pointer"
               >
                 <Pencil2Icon />
                 Szerkesztés
               </Button>
             </li>
             <li>
-              <Button variant="soft" color="red" onClick={handleDelete}>
-                Törlés
+              <Button
+                variant="soft"
+                color="red"
+                onClick={handleDelete}
+                className="cursor-pointer"
+              >
+                <CrossCircledIcon />
+                <p>Törlés</p>
               </Button>
             </li>
           </ul>

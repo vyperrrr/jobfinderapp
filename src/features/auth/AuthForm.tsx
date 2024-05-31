@@ -151,7 +151,7 @@ const AuthForm = () => {
             </>
           )}
           <Form.Submit className="mt-10" asChild>
-            <Button className="" size="3" variant="soft">
+            <Button size="3" variant="soft" className="cursor-pointer">
               {mode === "register" ? "Regisztráció" : "Bejelentkezés"}
             </Button>
           </Form.Submit>
@@ -163,7 +163,7 @@ const AuthForm = () => {
         </p>
         <Link
           to={`/auth/${mode === "register" ? "login" : "register"}`}
-          className="text-blue-400"
+          className="cursor-pointer text-blue-400"
         >
           {mode === "register" ? "Jelentkezz be!" : "Regisztrálj egyet!"}
         </Link>

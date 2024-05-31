@@ -27,6 +27,7 @@ const Advertisements = () => {
             variant="surface"
             color="green"
             onClick={() => navigate("/advertisements/new")}
+            className="cursor-pointer"
           >
             <DoubleArrowUpIcon />
             Új hirdetés feladása

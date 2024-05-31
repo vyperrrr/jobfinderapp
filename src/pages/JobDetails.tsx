@@ -6,7 +6,7 @@ import {
   useRemoveJobApplicantMutation,
 } from "../services/applicantsApi";
 
-import { Badge, Button, Callout, Section } from "@radix-ui/themes";
+import { Badge, Button, Callout, Quote, Section } from "@radix-ui/themes";
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -14,7 +14,8 @@ import { useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { IoLocationSharp } from "react-icons/io5";
 import { CiBadgeDollar } from "react-icons/ci";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon, Pencil1Icon, ResetIcon } from "@radix-ui/react-icons";
+import { prettyPrint } from "../utils";
 
 const JobDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -58,30 +59,36 @@ const JobDetails = () => {
 
   return (
     <Section className="space-y-10">
-      <div>
-        <h1 className="text-4xl font-semibold">{job?.company}</h1>
-        <span className="flex items-center gap-x-2">
-          <h2 className="text-3xl">{job?.position}</h2>
-          <Badge>{job?.homeOffice ? "Remote" : "On-site"}</Badge>
+      <div className="space-y-4">
+        <h1 className="text-right text-4xl font-semibold underline underline-offset-4">
+          {job?.company}
+        </h1>
+        <span className="flex items-center justify-between gap-x-2 rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-800 p-4 shadow-md">
+          <p className="text-3xl font-semibold">{job?.position}</p>
+          <span className="flex items-center gap-x-2 rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+            <CiBadgeDollar className="h-8 w-8 text-emerald-400" />
+            <p className="font-semibold">
+              {prettyPrint(job!.salaryFrom)
+                .concat(" - ")
+                .concat(prettyPrint(job!.salaryTo))}
+            </p>
+          </span>
         </span>
         <span className="flex items-center gap-x-1">
-          <IoLocationSharp />
-          <p className="text-sm">{job?.city}</p>
+          <Badge>{job?.homeOffice ? "Remote" : "On-site"}</Badge>
+          <span className="flex items-center">
+            <IoLocationSharp />
+            <Quote className="text-sm">{job?.city}</Quote>
+          </span>
         </span>
       </div>
       <div className="space-y-4">
-        <h3 className="text-2xl font-semibold">Leírás</h3>
+        <h2 className="text-3xl font-semibold underline underline-offset-4">
+          Leírás
+        </h2>
         <p className="whitespace-pre-wrap text-sm">{job?.description}</p>
       </div>
-      <div className="space-y-4">
-        <h3 className="text-2xl font-semibold">Fizetési sáv</h3>
-        <span className="flex items-center gap-x-2">
-          <CiBadgeDollar />
-          <p>
-            {job?.salaryFrom} - {job?.salaryTo}
-          </p>
-        </span>
-      </div>
+
       <div>
         {isApplied ? (
           <div className="space-y-4">
@@ -96,13 +103,21 @@ const JobDetails = () => {
               color="red"
               size="4"
               onClick={() => removeApplication(job!.id)}
+              className="cursor-pointer"
             >
-              Jelentkezés lemondása
+              <p>Jelentkezés lemondása</p>
+              <ResetIcon />
             </Button>
           </div>
         ) : (
-          <Button variant="outline" onClick={() => apply(job!.id)} size="4">
-            Jelentkezés
+          <Button
+            variant="surface"
+            onClick={() => apply(job!.id)}
+            size="4"
+            className="cursor-pointer"
+          >
+            <p>Jelentkezés</p>
+            <Pencil1Icon />
           </Button>
         )}
       </div>
