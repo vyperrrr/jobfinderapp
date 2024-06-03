@@ -14,40 +14,43 @@ const ExperiencePanel: React.FC<ExperiencePanelProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="flex h-40 items-center justify-between rounded-md rounded-sm  border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
-      <span className="flex flex-col gap-y-4">
-        <p className="text-2xl font-semibold">{experience.title}</p>
-        <ul className="flex gap-x-4 [&>li]:flex [&>li]:items-center [&>li]:gap-x-1">
-          <li>
-            <BackpackIcon />
-            <p>{experience.company}</p>
+    <div className="flex h-40 items-center justify-between rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
+      <span className="flex flex-col items-start gap-y-4">
+        <span className="flex items-center gap-x-2">
+          <h2 className="text-2xl font-semibold ">{experience.title}</h2>
+        </span>
+        <ul className="flex gap-x-2 [&>li]:flex [&>li]:items-center [&>li]:gap-x-2">
+          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+            <BackpackIcon className="h-4 w-4 text-emerald-400" />
+            <p className="text-xs font-semibold">{experience.company}</p>
           </li>
-          <li>
-            <TimerIcon />
-            <p>{experience.interval}</p>
+          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+            <TimerIcon className="h-4 w-4 text-emerald-400" />
+            <p className="text-xs font-semibold capitalize">
+              {experience.interval}
+            </p>
           </li>
         </ul>
       </span>
-      <span>
+      <span className="flex flex-col items-end gap-y-4">
         <ul className="flex gap-x-4">
           <li>
             <Button
               variant="outline"
-              onClick={onModify}
+              onClick={() => onModify()}
               className="cursor-pointer"
             >
-              <Pencil2Icon />
-              Szerkesztés
+              <p>Szerkesztés</p>
             </Button>
           </li>
           <li>
             <Button
-              variant="soft"
+              variant="surface"
               color="red"
               onClick={() => onDelete(experience.id)}
               className="cursor-pointer"
             >
-              Törlés
+              <p>Törlés</p>
             </Button>
           </li>
         </ul>
