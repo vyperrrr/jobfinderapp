@@ -34,8 +34,8 @@ export const applicantsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Applicant"],
     }),
-    getJobsForApplicant: builder.query<ApplyResponse[], number>({
-      query: (userId) => `applicants?userId=${userId}`,
+    getJobsForApplicant: builder.query<ApplyResponse[], { id?: number }>({
+      query: (payload) => `applicants?userId=${payload.id}`,
       providesTags: ["Applicant"],
     }),
   }),
