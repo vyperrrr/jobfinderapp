@@ -6,7 +6,7 @@ import {
   useRemoveJobApplicantMutation,
 } from "../services/applicantsApi";
 
-import { Badge, Button, Callout, Quote, Section } from "@radix-ui/themes";
+import { Badge, Button, Callout, Section } from "@radix-ui/themes";
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -81,9 +81,9 @@ const JobDetails = () => {
         </span>
         <span className="flex items-center gap-x-1">
           <Badge>{job?.homeOffice ? "Remote" : "On-site"}</Badge>
-          <span className="flex items-center">
+          <span className="flex items-center gap-x-1">
             <IoLocationSharp />
-            <Quote className="text-sm">{job?.city}</Quote>
+            <p className="text-sm">{job?.city}</p>
           </span>
         </span>
       </div>

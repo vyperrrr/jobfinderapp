@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Avatar, DropdownMenu, Heading } from "@radix-ui/themes";
@@ -11,6 +11,12 @@ import { logout } from "../features/auth/authSlice";
 const Header: React.FC = () => {
   const { user, token } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    dispatch(logout());
+    navigate("/");
+  }
 
   return (
     <div>
@@ -77,7 +83,7 @@ const Header: React.FC = () => {
                     </DropdownMenu.Item>
                   </NavLink>
                   <DropdownMenu.Item
-                    onClick={() => dispatch(logout())}
+                    onClick={handleLogout}
                     className="cursor-pointer"
                   >
                     Kijelentkezés

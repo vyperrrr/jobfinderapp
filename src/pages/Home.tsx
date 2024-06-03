@@ -7,7 +7,7 @@ import { DropdownMenu } from "@radix-ui/themes";
 
 const Home: React.FC = () => {
   return (
-    <Section className="space-y-10">
+    <Section className="space-y-10 px-2">
       <span className="flex items-center gap-x-2">
         <SearchBar />
         <DropdownMenu.Root dir="rtl">

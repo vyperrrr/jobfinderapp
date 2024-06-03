@@ -8,7 +8,7 @@ const Applications = () => {
     data: applications,
     isLoading,
     isError,
-  } = useGetJobsForApplicantQuery(user!.id);
+  } = useGetJobsForApplicantQuery({ id: user?.id });
 
   return (
     <div>
