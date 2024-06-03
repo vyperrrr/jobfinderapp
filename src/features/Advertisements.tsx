@@ -8,7 +8,7 @@ import { DoubleArrowUpIcon } from "@radix-ui/react-icons";
 
 const Advertisements = () => {
   const { user } = useAuth();
-  const { data } = useGetJobsQuery({
+  const { data, isLoading, isError } = useGetJobsQuery({
     userId: user.id,
   });
 
@@ -36,13 +36,23 @@ const Advertisements = () => {
         <Quote className="text-xl">A te hirdetéseid...</Quote>
       </div>
       <div className="space-y-6">
-        {jobs?.map((job: Job) => (
-          <AdvertisementPanel
-            key={job.id}
-            advertisement={job}
-            onEdit={(id) => navigate(`/advertisements/${id}/edit`)}
-          />
-        ))}
+        {isLoading && <p>Adatok betöltése...</p>}
+        {isError && <p>Hiba történt...</p>}
+        {!isLoading && !isError && (
+          <>
+            {jobs && jobs.length > 0 ? (
+              jobs.map((job: Job) => (
+                <AdvertisementPanel
+                  key={job.id}
+                  advertisement={job}
+                  onEdit={(id) => navigate(`/advertisements/${id}/edit`)}
+                />
+              ))
+            ) : (
+              <p>Még nincs egy hirdetésed sem...</p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

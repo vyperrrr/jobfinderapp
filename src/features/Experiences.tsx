@@ -25,7 +25,7 @@ const defaultFormState: FormState = {
 };
 
 const Experiences = () => {
-  const { data: experiences } = useGetExperiencesQuery();
+  const { data: experiences, isLoading, isError } = useGetExperiencesQuery();
   const [modifyExperience] = useModifyExperienceMutation();
   const [deleteExperience] = useDeleteExperienceMutation();
   const [addExperience] = useAddExperienceMutation();
@@ -95,15 +95,22 @@ const Experiences = () => {
             Tapasztalat hozzáadása
           </Button>
         </span>
-
-        {experiences?.data.map((experience) => (
-          <ExperiencePanel
-            key={experience.id}
-            experience={experience}
-            onModify={() => handleAction("modify", experience)}
-            onDelete={() => deleteExperience(experience.id)}
-          />
-        ))}
+        {isError && <p>Hiba történt...</p>}
+        {isLoading && <p>Tapasztalatok betöltése...</p>}
+        {!isLoading &&
+          !isError &&
+          (experiences && experiences.data && experiences.data.length > 0 ? (
+            experiences.data.map((experience) => (
+              <ExperiencePanel
+                key={experience.id}
+                experience={experience}
+                onModify={() => handleAction("modify", experience)}
+                onDelete={() => deleteExperience(experience.id)}
+              />
+            ))
+          ) : (
+            <p>Még nem adtál meg tapasztalatot...</p>
+          ))}
       </span>
       <Dialog.Root open={dialogOpen}>
         <Dialog.Content maxWidth="450px">

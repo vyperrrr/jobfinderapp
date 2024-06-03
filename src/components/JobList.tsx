@@ -27,19 +27,23 @@ const JobList: React.FC = () => {
   const jobs = data?.data;
 
   if (isError) {
-    return <div>An error occurred...</div>;
+    return <div>Hiba történt...</div>;
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Állások betöltése...</div>;
   }
 
   return (
     <div>
       <span className="space-y-6">
-        {jobs?.map((job: Job) => {
-          return <JobPanel key={job.id} job={job} />;
-        })}
+        {jobs && jobs.length > 0 ? (
+          jobs.map((job: Job) => {
+            return <JobPanel key={job.id} job={job} />;
+          })
+        ) : (
+          <p>Egy álláshirdetés sem áll rendelkezésre...</p>
+        )}
       </span>
     </div>
   );

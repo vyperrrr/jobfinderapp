@@ -122,6 +122,7 @@ const AuthForm = () => {
                 </Form.Control>
               </Form.Field>
               <Controller
+                defaultValue="jobseeker"
                 name="role"
                 control={control}
                 render={({ field: { onChange, value } }) => (
@@ -129,11 +130,7 @@ const AuthForm = () => {
                     <Text as="label" size="2" weight="bold">
                       Regisztráció mint
                     </Text>
-                    <Select.Root
-                      defaultValue="jobseeker"
-                      onValueChange={onChange}
-                      value={value}
-                    >
+                    <Select.Root onValueChange={onChange} value={value}>
                       <Select.Trigger />
                       <Select.Content position="popper">
                         <Select.Group>
