@@ -34,21 +34,12 @@ const AuthForm = () => {
 
   const [
     authLogin,
-    {
-      data: loginData,
-      isSuccess: isLoginSuccess,
-      // isError: isLoginError,
-      // error: loginError,
-    },
+    { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError },
   ] = useLoginUserMutation();
 
   const [
     authRegister,
-    {
-      isSuccess: isRegisterSuccess,
-      // isError: isRegisterError,
-      // error: registerError,
-    },
+    { isSuccess: isRegisterSuccess, isError: isRegisterError },
   ] = useRegisterUserMutation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -68,10 +59,11 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (isLoginSuccess) {
-      console.log(loginData);
       dispatch(login({ user: loginData.user, token: loginData.accessToken }));
       toast.dark("Sikeres bejelentkezés!");
       navigate("/");
+    } else if (isLoginError) {
+      toast.error("Sikertelen bejelentkezés!");
     }
   }, [isLoginSuccess, dispatch, loginData, navigate]);
 
@@ -79,12 +71,14 @@ const AuthForm = () => {
     if (isRegisterSuccess) {
       toast.dark("Sikeres regisztráció!");
       navigate("/auth/login");
+    } else if (isRegisterError) {
+      toast.error("Sikertelen regisztráció!");
     }
   }, [isRegisterSuccess, navigate]);
 
   return (
-    <div className="rounded-md bg-slate-800 p-12">
-      <div className="w-96 space-y-10 rounded-md bg-slate-900 p-6 shadow-md">
+    <div className="max-w-lg flex-1 rounded-md bg-slate-800 px-6 py-12 md:p-12">
+      <div className="flex-1 space-y-10 rounded-md bg-slate-900 p-6 shadow-md">
         <h1 className="text-center text-3xl font-semibold">
           {mode === "register" ? "Regisztráció" : "Bejelentkezés"}
         </h1>

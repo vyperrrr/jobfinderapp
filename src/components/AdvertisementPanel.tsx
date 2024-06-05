@@ -37,8 +37,8 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
 
   return (
     <>
-      <div className="flex min-h-40 items-center justify-between rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 px-8 shadow-md dark:bg-slate-800 dark:text-slate-50">
-        <span className="flex flex-col items-start gap-y-4">
+      <div className="flex min-h-40 flex-col justify-between gap-y-2 rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-50 p-4 shadow-md md:flex-row md:items-center dark:bg-slate-800 dark:text-slate-50">
+        <span className="flex flex-col gap-y-4 md:items-start">
           <span className="flex items-center gap-x-2">
             <h2 className="text-2xl font-semibold ">
               {advertisement.position}
@@ -47,26 +47,26 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               {advertisement.homeOffice ? "Remote" : "On-site"}
             </Badge>
           </span>
-          <ul className="flex gap-x-2 [&>li]:flex [&>li]:items-center [&>li]:gap-x-2">
-            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+          <ul className="flex flex-col gap-2 md:flex-row [&>li]:flex [&>li]:items-center [&>li]:gap-x-2">
+            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
               <BackpackIcon className="h-4 w-4 text-emerald-400" />
               <p className="text-xs font-semibold">{advertisement.company}</p>
             </li>
-            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
               <TimerIcon className="h-4 w-4 text-emerald-400" />
               <p className="text-xs font-semibold capitalize">
                 {advertisement.type}
               </p>
             </li>
-            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
               <SewingPinIcon className="h-4 w-4 text-emerald-400" />
               <p className="text-xs font-semibold">{advertisement.city}</p>
             </li>
           </ul>
         </span>
-        <span className="flex flex-col items-end gap-y-4">
-          <ul className="flex [&>li]:flex [&>li]:items-center [&>li]:gap-x-2">
-            <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+        <span className="flex flex-col gap-y-4 md:items-end">
+          <ul className="flex flex-col gap-y-2 md:flex-row [&>li]:flex [&>li]:gap-x-2">
+            <li className="items-center rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
               <CiBadgeDollar className="h-8 w-8 text-emerald-400" />
               <p className="font-semibold">
                 {prettyPrint(advertisement.salaryFrom)
@@ -75,12 +75,12 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               </p>
             </li>
           </ul>
-          <ul className="flex gap-x-4">
+          <ul className="flex flex-col gap-2 gap-x-4 md:flex-row md:justify-end">
             <li>
               <Button
                 variant="outline"
                 onClick={() => setOpen((prevOpen) => !prevOpen)}
-                className="cursor-pointer"
+                className="w-full cursor-pointer"
               >
                 <Link2Icon />
                 {open ? "Jelentkezők elrejtése" : "Jelentkezők megtekintése"}
@@ -90,7 +90,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               <Button
                 variant="outline"
                 onClick={() => onEdit(advertisement.id)}
-                className="cursor-pointer"
+                className="w-full cursor-pointer"
               >
                 <Pencil2Icon />
                 Szerkesztés
@@ -101,7 +101,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
                 variant="soft"
                 color="red"
                 onClick={handleDelete}
-                className="cursor-pointer"
+                className="w-full cursor-pointer"
               >
                 <CrossCircledIcon />
                 <p>Törlés</p>

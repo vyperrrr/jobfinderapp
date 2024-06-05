@@ -40,7 +40,7 @@ const JobDetails = () => {
 
   useEffect(() => {
     if (isApplySuccess) {
-      toast.success("Sikeres jelentkezés!");
+      toast.dark("Sikeres jelentkezés!");
     } else if (isApplyError) {
       toast.error("Hiba történt a jelentkezés során.");
     }
@@ -48,7 +48,7 @@ const JobDetails = () => {
 
   useEffect(() => {
     if (isRemoveSuccess) {
-      toast.success("Sikeres lejelentkezés!");
+      toast.dark("Sikeres lejelentkezés!");
     } else if (isRemoveError) {
       toast.error("Hiba történt a lejelentkezés során.");
     }
@@ -63,12 +63,10 @@ const JobDetails = () => {
   }
 
   return (
-    <Section className="space-y-10">
+    <Section className="space-y-10 px-2">
       <div className="space-y-4">
-        <h1 className="text-right text-4xl font-semibold underline underline-offset-4">
-          {job?.company}
-        </h1>
-        <span className="flex items-center justify-between gap-x-2 rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-800 p-4 shadow-md">
+        <h1 className="text-right text-4xl font-semibold">{job?.company}</h1>
+        <span className="flex flex-col justify-between gap-2 rounded-md border-b-8 border-l-4 border-b-slate-300 border-l-slate-300 bg-slate-800 p-4 shadow-md md:flex-row md:items-center">
           <p className="text-3xl font-semibold">{job?.position}</p>
           <span className="flex items-center gap-x-2 rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
             <CiBadgeDollar className="h-8 w-8 text-emerald-400" />
@@ -88,9 +86,7 @@ const JobDetails = () => {
         </span>
       </div>
       <div className="space-y-4">
-        <h2 className="text-3xl font-semibold underline underline-offset-4">
-          Leírás
-        </h2>
+        <h2 className="text-3xl font-semibold">Leírás</h2>
         <p className="whitespace-pre-wrap text-sm">{job?.description}</p>
       </div>
 

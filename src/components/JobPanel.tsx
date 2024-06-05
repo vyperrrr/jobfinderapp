@@ -25,15 +25,15 @@ const JobListItem: React.FC<{ job: Job }> = ({ job }) => {
           <Badge color="green">{job.homeOffice ? "Remote" : "On-site"}</Badge>
         </span>
         <ul className="flex flex-col gap-y-2 md:flex-row md:gap-x-2 [&>li]:flex [&>li]:gap-x-2">
-          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
             <BackpackIcon className="h-4 w-4 text-emerald-400" />
             <p className="text-xs font-semibold">{job.company}</p>
           </li>
-          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
             <TimerIcon className="h-4 w-4 text-emerald-400" />
             <p className="text-xs font-semibold capitalize">{job.type}</p>
           </li>
-          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-4 shadow-md">
+          <li className="rounded-md border-b-4 border-b-slate-300 bg-slate-700 p-2 shadow-md md:p-4">
             <SewingPinIcon className="h-4 w-4 text-emerald-400" />
             <p className="text-xs font-semibold">{job.city}</p>
           </li>

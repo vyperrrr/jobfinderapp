@@ -17,7 +17,7 @@ const Home: React.FC = () => {
               Szűrők
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="p-6 md:min-w-[600px]">
+          <DropdownMenu.Content className="p-6">
             <FilterForm />
           </DropdownMenu.Content>
         </DropdownMenu.Root>

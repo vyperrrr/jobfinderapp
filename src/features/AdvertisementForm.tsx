@@ -44,7 +44,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   }, [defaultValues, reset]);
 
   return (
-    <div className=" space-y-10 rounded-md border-l-4  border-l-slate-300 bg-slate-900 p-6 shadow-md">
+    <div className=" space-y-10 rounded-md  bg-slate-900 p-6 shadow-md">
       <Form.Root className="space-y-4 p-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-x-2 gap-y-4 md:flex-row">
           <Form.Field {...register("company")} className="flex-1">
@@ -174,11 +174,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
           )}
         />
         <Form.Submit asChild>
-          <Button
-            size="3"
-            variant="surface"
-            className="float-end cursor-pointer"
-          >
+          <Button size="3" variant="surface" className="cursor-pointer">
             Mentés
           </Button>
         </Form.Submit>

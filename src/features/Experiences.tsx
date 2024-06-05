@@ -82,10 +82,8 @@ const Experiences = () => {
   return (
     <div>
       <span className="space-y-4">
-        <span className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold underline underline-offset-4">
-            Tapasztalatok
-          </h1>
+        <span className="flex flex-col justify-between gap-2 md:flex-row md:items-center">
+          <h1 className="text-3xl font-semibold">Tapasztalatok</h1>
           <Button
             variant="outline"
             color="green"

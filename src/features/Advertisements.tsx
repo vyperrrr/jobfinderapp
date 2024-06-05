@@ -19,10 +19,8 @@ const Advertisements = () => {
   return (
     <div className="space-y-4">
       <div>
-        <span className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold underline underline-offset-4">
-            Álláshirdetések
-          </h1>
+        <span className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <h1 className="text-3xl font-semibold">Álláshirdetések</h1>
           <Button
             variant="surface"
             color="green"
@@ -33,7 +31,7 @@ const Advertisements = () => {
             Új hirdetés feladása
           </Button>
         </span>
-        <Quote className="text-xl">A te hirdetéseid...</Quote>
+        <Quote className="hidden text-xl md:block">A te hirdetéseid...</Quote>
       </div>
       <div className="space-y-6">
         {isLoading && <p>Adatok betöltése...</p>}
