@@ -44,7 +44,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   }, [defaultValues, reset]);
 
   return (
-    <div className=" space-y-10 rounded-md  bg-slate-900 p-6 shadow-md">
+    <div className="flex-1 space-y-10 rounded-md bg-slate-900 p-6 shadow-md">
       <Form.Root className="space-y-4 p-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-x-2 gap-y-4 md:flex-row">
           <Form.Field {...register("company")} className="flex-1">
@@ -52,7 +52,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
               Cég neve
             </Text>
             <Form.Control asChild>
-              <TextField.Root type="text" />
+              <TextField.Root type="text" placeholder="A céged neve..." />
             </Form.Control>
             {errors.company && (
               <Form.Label className="text-sm text-red-500">
@@ -65,7 +65,10 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
               Pozíció
             </Text>
             <Form.Control asChild>
-              <TextField.Root type="text" />
+              <TextField.Root
+                type="text"
+                placeholder="A hirdetett pozició..."
+              />
             </Form.Control>
             {errors.position && (
               <Form.Label className="text-sm text-red-500">
@@ -79,7 +82,11 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
             Leírás
           </Text>
           <Form.Control asChild>
-            <TextArea size="3" resize="vertical" />
+            <TextArea
+              size="3"
+              resize="vertical"
+              placeholder="Rövid leírás a munkáról..."
+            />
           </Form.Control>
           {errors.description && (
             <Form.Label className="text-sm text-red-500">
@@ -96,7 +103,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
               Fizetési sáv alja
             </Text>
             <Form.Control asChild>
-              <TextField.Root type="number" />
+              <TextField.Root type="number" placeholder="Alsó keret..." />
             </Form.Control>
             {errors.salaryFrom && (
               <Form.Label className="text-sm text-red-500">
@@ -112,7 +119,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
               Fizetési sáv teteje
             </Text>
             <Form.Control asChild>
-              <TextField.Root type="number" />
+              <TextField.Root type="number" placeholder="Felső keret..." />
             </Form.Control>
             {errors.salaryTo && (
               <Form.Label className="text-sm text-red-500">
@@ -151,7 +158,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         <Form.Field {...register("city")}>
           <Form.Label className="text-sm">Település</Form.Label>
           <Form.Control asChild>
-            <TextField.Root />
+            <TextField.Root placeholder="Település..." />
           </Form.Control>
           {errors.city && (
             <Form.Label className="text-sm text-red-500">

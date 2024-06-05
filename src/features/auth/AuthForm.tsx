@@ -89,20 +89,20 @@ const AuthForm = () => {
                 Teljes név
               </Form.Label>
               <Form.Control asChild>
-                <TextField.Root />
+                <TextField.Root placeholder="A teljes neved..." />
               </Form.Control>
             </Form.Field>
           )}
           <Form.Field {...register("email")}>
             <Form.Label className="text-sm font-semibold">Email</Form.Label>
             <Form.Control asChild>
-              <TextField.Root />
+              <TextField.Root placeholder="Az email címed..." />
             </Form.Control>
           </Form.Field>
           <Form.Field {...register("password")}>
             <Form.Label className="text-sm font-semibold">Jelszó</Form.Label>
             <Form.Control asChild>
-              <TextField.Root type="password" />
+              <TextField.Root type="password" placeholder="A jelszavad..." />
             </Form.Control>
           </Form.Field>
           {mode === "register" && (
@@ -112,7 +112,10 @@ const AuthForm = () => {
                   Jelszó újra
                 </Form.Label>
                 <Form.Control asChild>
-                  <TextField.Root type="password" />
+                  <TextField.Root
+                    type="password"
+                    placeholder="A jelszavad mégegyszer..."
+                  />
                 </Form.Control>
               </Form.Field>
               <Controller

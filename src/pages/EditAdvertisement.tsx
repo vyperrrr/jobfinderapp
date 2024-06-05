@@ -28,7 +28,7 @@ const EditAdvertisement = () => {
   return (
     <Section className="space-y-10 px-2">
       <h1 className="text-4xl font-semibold">Álláshirdetés módosítása</h1>
-      <div className="rounded-md bg-slate-800 p-12">
+      <div className="flex rounded-md bg-slate-800 px-6 py-12 md:p-12">
         <AdvertisementForm
           defaultValues={advertisement}
           submitAction={(data) => handleSubmit(data)}

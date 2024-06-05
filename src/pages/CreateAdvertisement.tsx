@@ -27,7 +27,7 @@ const CreateAdvertisement = () => {
   return (
     <Section className="space-y-10 px-2">
       <h1 className="text-3xl font-semibold">Álláshirdetés hozzáadása</h1>
-      <div className="rounded-md bg-slate-800 p-12">
+      <div className="flex rounded-md bg-slate-800 px-6 py-12 md:p-12">
         <AdvertisementForm submitAction={(data) => handleSubmit(data)} />
       </div>
     </Section>
