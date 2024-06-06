@@ -96,7 +96,7 @@ const AuthForm = () => {
       toast.dark("Sikeres regisztráció!");
       navigate("/auth/login");
     } else if (isRegisterError) {
-      toast.error("Sikertelen regisztráció!");
+      toast.dark("Sikertelen regisztráció!");
     }
   }, [isRegisterError, isRegisterSuccess, navigate]);
 
