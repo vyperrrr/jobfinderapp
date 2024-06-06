@@ -1,6 +1,5 @@
 import { Job } from "../types";
 
-import { useDeleteJobMutation } from "../services/jobsApi";
 import { useState } from "react";
 
 import { Badge, Button } from "@radix-ui/themes";
@@ -21,19 +20,15 @@ import { prettyPrint } from "../utils";
 interface AdvertisementPanelProps {
   advertisement: Job;
   onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
   advertisement,
   onEdit,
+  onDelete,
 }) => {
   const [open, setOpen] = useState(false);
-
-  const [deleteJob] = useDeleteJobMutation();
-
-  function handleDelete() {
-    deleteJob(advertisement.id);
-  }
 
   return (
     <>
@@ -100,7 +95,7 @@ const AdvertisementPanel: React.FC<AdvertisementPanelProps> = ({
               <Button
                 variant="soft"
                 color="red"
-                onClick={handleDelete}
+                onClick={() => onDelete(advertisement.id)}
                 className="w-full cursor-pointer"
               >
                 <CrossCircledIcon />

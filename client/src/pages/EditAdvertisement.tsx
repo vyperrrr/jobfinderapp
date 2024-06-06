@@ -11,7 +11,7 @@ const EditAdvertisement = () => {
   const navigate = useNavigate();
   const [editJob, { isSuccess, isError }] = useEditJobMutation();
 
-  function handleSubmit(data: Job) {
+  function handleSubmit(data: any) {
     const { id, userId, ...rest } = data;
     editJob({ id, data: rest });
   }

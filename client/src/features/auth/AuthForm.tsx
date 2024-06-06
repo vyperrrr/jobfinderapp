@@ -13,14 +13,24 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-type Inputs = {
+interface Inputs {
   email: string;
   password: string;
   confirmPassword?: string;
   fullname: string;
   role: "company" | "jobseeker";
   experiences?: string;
-};
+}
+
+interface Error {
+  status: number;
+  data: {
+    name: string;
+    message: string;
+    code: number;
+    className: string;
+  };
+}
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -34,12 +44,21 @@ const AuthForm = () => {
 
   const [
     authLogin,
-    { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError },
+    {
+      data: loginData,
+      isSuccess: isLoginSuccess,
+      isError: isLoginError,
+      error: loginError,
+    },
   ] = useLoginUserMutation();
 
   const [
     authRegister,
-    { isSuccess: isRegisterSuccess, isError: isRegisterError },
+    {
+      isSuccess: isRegisterSuccess,
+      isError: isRegisterError,
+      // error: registerError,
+    },
   ] = useRegisterUserMutation();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -63,9 +82,14 @@ const AuthForm = () => {
       toast.dark("Sikeres bejelentkezés!");
       navigate("/");
     } else if (isLoginError) {
-      toast.error("Sikertelen bejelentkezés!");
+      if ((loginError as Error).status === 401) {
+        toast.dark("Hibás email vagy jelszó!");
+        console.log(loginError);
+      } else {
+        toast.dark("Sikertelen bejelentkezés!");
+      }
     }
-  }, [isLoginSuccess, dispatch, loginData, navigate]);
+  }, [loginError, isLoginError, isLoginSuccess, dispatch, loginData, navigate]);
 
   useEffect(() => {
     if (isRegisterSuccess) {
@@ -74,7 +98,7 @@ const AuthForm = () => {
     } else if (isRegisterError) {
       toast.error("Sikertelen regisztráció!");
     }
-  }, [isRegisterSuccess, navigate]);
+  }, [isRegisterError, isRegisterSuccess, navigate]);
 
   return (
     <div className="max-w-lg flex-1 rounded-md bg-slate-800 px-6 py-12 md:p-12">

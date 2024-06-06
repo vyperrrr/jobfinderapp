@@ -2,7 +2,6 @@ import { Section } from "@radix-ui/themes";
 import AdvertisementForm from "../features/AdvertisementForm";
 import { useCreateJobMutation } from "../services/jobsApi";
 import { useNavigate } from "react-router";
-import { Job } from "../types";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -10,7 +9,7 @@ const CreateAdvertisement = () => {
   const navigate = useNavigate();
   const [createJob, { isSuccess, isError }] = useCreateJobMutation();
 
-  function handleSubmit(data: Job) {
+  function handleSubmit(data: any) {
     createJob(data);
     navigate("/profile");
   }

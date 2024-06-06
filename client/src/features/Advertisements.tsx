@@ -1,6 +1,7 @@
 import { Button, Quote } from "@radix-ui/themes";
 import AdvertisementPanel from "../components/AdvertisementPanel";
 import { useGetJobsQuery } from "../services/jobsApi";
+import { useDeleteJobMutation } from "../services/jobsApi";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router";
 import { Job } from "../types";
@@ -9,10 +10,16 @@ import { DoubleArrowUpIcon } from "@radix-ui/react-icons";
 const Advertisements = () => {
   const { user } = useAuth();
   const { data, isLoading, isError } = useGetJobsQuery({
-    userId: user.id,
+    userId: user!.id,
   });
 
+  const [deleteJob] = useDeleteJobMutation();
+
   const navigate = useNavigate();
+
+  async function handleDelete(id: number) {
+    await deleteJob(id);
+  }
 
   const jobs = data?.data;
 
@@ -44,6 +51,7 @@ const Advertisements = () => {
                   key={job.id}
                   advertisement={job}
                   onEdit={(id) => navigate(`/advertisements/${id}/edit`)}
+                  onDelete={handleDelete}
                 />
               ))
             ) : (
